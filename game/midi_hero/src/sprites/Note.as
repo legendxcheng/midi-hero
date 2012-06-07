@@ -37,7 +37,6 @@ package sprites
 			
 			m_color = color;
 			m_height = height;
-			this.dirty = true;
 			m_needUpdate = true;
 			
 			
