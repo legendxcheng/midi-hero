@@ -14,13 +14,9 @@ package states
 			m_gameLogic = null;
 			
 			var mp : MidiParser = MidiParser.getInstance();
-			mp.loadJson("f:\\11.jsn");
+			mp.loadJson("f:\\test.jsn");
 			//add(new FlxText(0,0,100,"Hello, World!")); //adds a 100px wide text field at position 0,0 (upper left)
-			var note : Note = new Note(100);
-			note.changeNote(0xFFAA0FFF, 400);
-			add(note);
-			note.x = 300;
-			note.y = 000;
+			
 			
 		}
 		

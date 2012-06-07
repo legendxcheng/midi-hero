@@ -1,7 +1,7 @@
 package logics
 {
 	import com.adobe.serialization.json.JSON;
-	
+	import logics.SceneMgr; 
 	import flash.events.*;
 	import flash.net.*;
 	import flash.net.URLLoader;
@@ -38,7 +38,19 @@ package logics
 		{
 			var rawData:String = String(m_urlLoader.data);
 			m_json = (com.adobe.serialization.json.JSON.decode(rawData) as Array);
-			//m_urlLoader.data;	
+			// now we have the score data
+			// we parse it to a more convenient format
+			// then pass it to SceneMgr
+			var sm : SceneMgr = SceneMgr.getInstance();
+			var ni : Array = new Array();
+			for (var i : int = 0; i < m_json.length; ++i)
+			{
+				
+			}
+			
+			
+			
+			
 		}
 		
 		private function handleError(event : IOErrorEvent) : void
