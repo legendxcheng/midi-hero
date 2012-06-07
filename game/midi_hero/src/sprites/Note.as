@@ -25,8 +25,11 @@ package sprites
 			frameWidth = width;
 			frameHeight = 480;
 			height = 768;
-			_pixels = new BitmapData(m_width, 480, true, 0xFF000000);
+			_pixels = new BitmapData(m_width, 480, false, 0xFFFF0000);
+
 			resetHelpers();
+			this.active = true;
+			
 		}
 		
 		public function changeNote(color : uint, height : int) : void
@@ -34,7 +37,9 @@ package sprites
 			
 			m_color = color;
 			m_height = height;
+			this.dirty = true;
 			m_needUpdate = true;
+			
 			
 		}
 		
@@ -44,8 +49,9 @@ package sprites
 			{
 				var rectb : Rectangle = new Rectangle(0, 0, m_width, m_height);
 				var rect : Rectangle = new Rectangle(0, 480 - m_height, m_width, m_height);
-				_pixels.fillRect(rectb, 0x00000000);
+				_pixels.fillRect(rectb, 0x000000);
 				_pixels.fillRect(rect, m_color);
+				resetHelpers();
 				m_needUpdate = false;
 			}
 		}
