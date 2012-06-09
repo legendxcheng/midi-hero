@@ -5,29 +5,26 @@ package states
 	import logics.MidiParser;
 	import sprites.Note;
 	import logics.GameLogic;
-	
+	import logics.UIMgr;
+	import logics.SceneMgr;
 	public class PlayState extends FlxState
 	{
+		
+		private var m_uiMgr : UIMgr;
 		private var m_gameLogic : GameLogic;
 		override public function create():void
 		{
-			m_gameLogic = null;
+			m_gameLogic = GameLogic.getInstance();
+			add(m_gameLogic);
 			
 			var mp : MidiParser = MidiParser.getInstance();
-			mp.loadJson("f:\\test.jsn");
-			//add(new FlxText(0,0,100,"Hello, World!")); //adds a 100px wide text field at position 0,0 (upper left)
+			mp.loadJson("f:\\test.jsn");		
 			
+			m_uiMgr = new UIMgr();
+			add(m_uiMgr);
 			
+			add(SceneMgr.getInstance());
 		}
 		
-		override public function preUpdate():void
-		{
-			
-			if (m_gameLogic == null)
-			{
-				m_gameLogic = GameLogic.getInstance();	
-			}
-			m_gameLogic.updateTimer();
-		}
 	}
 }
