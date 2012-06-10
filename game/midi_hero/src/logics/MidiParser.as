@@ -43,13 +43,13 @@ package logics
 				case "C":
 					return 0;
 					break;
-				case "#C":
+				case "C#":
 					return 1;
 					break;
 				case "D":
 					return 2;
 					break;
-				case "#D":
+				case "E-":
 					return 3;
 					break;
 				case "E":
@@ -58,19 +58,19 @@ package logics
 				case "F":
 					return 5;
 					break;
-				case "#F":
+				case "F#":
 					return 6;
 					break;
 				case "G":
 					return 7;
 					break;
-				case "#G":
+				case "G#":
 					return 8;
 					break;
 				case "A":
 					return 9;
 					break;
-				case "#A":
+				case "B-":
 					return 10;
 					break;
 				case "B":
