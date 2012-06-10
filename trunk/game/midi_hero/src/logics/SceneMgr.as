@@ -16,6 +16,11 @@ package logics
 		private var m_noteSprite : Array;
 		private var m_isPlaying : Boolean;
 		private var m_noteInfo : Array;
+		private var m_colorList : Array;
+		
+		
+		
+		
 		
 		
 		public function SceneMgr()
@@ -34,6 +39,24 @@ package logics
 			add(tn);
 			*/
 			resetScore();
+			
+			m_colorList = new Array();
+			m_colorList.push(0xFF8CC540);
+			m_colorList.push(0xFF009F5D);
+			m_colorList.push(0xFF019FA0);
+			m_colorList.push(0xFF019FDE);
+			m_colorList.push(0xFF007CDC);
+			m_colorList.push(0xFF887DDD);
+			m_colorList.push(0xFFCD7BDD);
+			m_colorList.push(0xFFFF5675);
+			m_colorList.push(0xFFFF1244);
+			m_colorList.push(0xFFFF8345);
+			m_colorList.push(0xFFf8BD0B);
+			m_colorList.push(0xFFD1D2D4);
+			
+			
+			
+			
 		}
 		
 		/*
@@ -115,7 +138,8 @@ package logics
 					note.resetNoteWidth((m_noteInfo[m_iEndIndex].end - m_noteInfo[m_iEndIndex].start) / timeScale);
 					//note.resetNoteWidth(100);
 					//note.changeNote(0xFFFFFF00, 300);
-					note.changeNote(0xFFFFFF00, m_noteInfo[m_iEndIndex].high * 5 + 100);
+					var nco : uint = m_colorList[m_noteInfo[m_iEndIndex].high % 12];
+					note.changeNote(nco, m_noteInfo[m_iEndIndex].high * 10 - 120);
 				}
 				else
 					break;
