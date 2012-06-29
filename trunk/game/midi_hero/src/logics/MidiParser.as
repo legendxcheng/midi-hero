@@ -110,7 +110,7 @@ package logics
 						tmp += 1;
 					else tmp -= 1;
 				}
-				ni.push({start: m_json[i].start, end : m_json[i].end, notePos : tmp * 2, 
+				ni.push({start: m_json[i].start * 3 , end : m_json[i].end * 3, notePos : tmp * 2, 
 					high : (m_json[i].octave - 3) * 12 + calcHigh(m_json[i].pitch)});
 			}
 			
