@@ -1,14 +1,71 @@
 package logics
 {
+	import com.adobe.serialization.json.JSON;
+	
+	import flash.events.*;
+	import flash.events.SampleDataEvent;
+	import flash.media.Sound;
+	import flash.media.SoundChannel;
+	import flash.net.*;
+	import flash.net.URLLoader;
+
+
 	public class SoundMgr
 	{
 		public function SoundMgr()
 		{
+			m_sound = new Sound();
+			m_sound.addEventListener( SampleDataEvent.SAMPLE_DATA, onSampleData );
+			m_restLength = 10;
+			
 		}
 		
-		private var m_instance : SoundMgr = null;
+		private static var m_instance : SoundMgr = null;
+		private var m_curNote : String;
+		private var m_sound : Sound;
+		private var m_channel : SoundChannel;
+		private var m_amplitude : Number;
+		private var m_restLength : int;
+		public static const SAMPLE_RATE :int = 44100;
+		public static const BUFFER_SIZE :int = 8192;
+		private var m_noteFreq : Array;
+		private var m_urlLoader : URLLoader;
 		
-		public function getInstance() : SoundMgr
+		/*
+			load note_freq json file, and input the data into a map
+		*/
+		public function loadNoteFreq() : void
+		{
+			m_urlLoader = new URLLoader();
+			m_urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
+			m_urlLoader.addEventListener(Event.COMPLETE, parseJson);
+			m_urlLoader.addEventListener(IOErrorEvent.IO_ERROR, handleError);
+			m_urlLoader.load(new URLRequest("note_freq.json"));
+		}
+		
+		private function handleError(event : IOErrorEvent) : void
+		{
+			trace(event.text);
+		}
+		
+		private function parseJson(event : Event) : void
+		{
+			var rawData:String = String(m_urlLoader.data);
+			m_noteFreq = (com.adobe.serialization.json.JSON.decode(rawData) as Array);
+				
+		}
+		
+		public function get curNote():String
+		{
+			return m_curNote;
+		}
+
+		public function set curNote(value:String):void
+		{
+			m_curNote = value;
+		}
+
+		public static function getInstance() : SoundMgr
 		{
 			if (m_instance == null)
 				m_instance = new SoundMgr();
@@ -17,15 +74,39 @@ package logics
 		
 		// call by ouside
 		// to play a note with a given frequency and a given length
-		public function playNote(name : String, len : Number) : void
+		public function changeNote(name : String, len : Number) : void
 		{
-			
+			m_curNote = name;
+			m_restLength = Math.floor(len * SAMPLE_RATE);
+			m_channel = m_sound.play();
 		}
 		
 		// given name of note, return its frequency
 		private function getFreq(name : String) : Number
 		{
+			return 0;
+		}
+		
+		private function onSampleData(event : SampleDataEvent) : void
+		{
+			var sample:Number;
+			var freq : Number = getFreq(m_curNote);
 			
+			if (m_restLength == 0 && m_channel != null)
+			{
+			 	m_channel.stop();
+				return;
+			}
+			
+			for( var i:int = 0; i < 8192; i++ )
+			{
+				if (m_restLength <= 0)
+					return;
+				m_restLength -= 1;
+				sample = Math.sin( Math.PI * 2 * freq * ( event.position + i ) / SAMPLE_RATE ) * m_amplitude;
+				event.data.writeFloat( sample );
+				event.data.writeFloat( sample );
+			}
 		}
 	}
 }
