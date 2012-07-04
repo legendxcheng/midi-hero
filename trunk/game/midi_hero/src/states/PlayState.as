@@ -7,9 +7,10 @@ package states
 	import logics.GameLogic;
 	import logics.UIMgr;
 	import logics.SceneMgr;
+	import logics.SoundMgr;
 	public class PlayState extends FlxState
 	{
-		
+		private var m_soundMgr : SoundMgr;
 		private var m_uiMgr : UIMgr;
 		private var m_gameLogic : GameLogic;
 		override public function create():void
@@ -24,6 +25,9 @@ package states
 			add(m_uiMgr);
 			
 			add(SceneMgr.getInstance());
+			
+			m_soundMgr = SoundMgr.getInstance();
+			m_soundMgr.loadNoteFreq();
 		}
 		
 	}
