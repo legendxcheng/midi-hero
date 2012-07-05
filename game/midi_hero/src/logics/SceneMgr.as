@@ -2,7 +2,7 @@ package logics
 {
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxSprite;
-	
+	import org.flixel.FlxG;
 	import sprites.Note;
 
 	// class that controls note sprite
@@ -25,6 +25,9 @@ package logics
 		
 		public function SceneMgr()
 		{	
+			
+			FlxG.framerate = 30;
+			
 			m_noteSprite = new Array();
 			// insert 100 notes for future use
 			for (var i: int = 0; i < 100; ++i)
@@ -140,6 +143,13 @@ package logics
 					//note.changeNote(0xFFFFFF00, 300);
 					var nco : uint = m_colorList[m_noteInfo[m_iEndIndex].high % 12];
 					note.changeNote(nco, m_noteInfo[m_iEndIndex].high * 10 - 120);
+					
+					/*
+						Here I play the note sound.
+					*/
+					var sndMgr : SoundMgr = SoundMgr.getInstance();
+					sndMgr.changeNote(m_noteInfo[m_iEndIndex].name, m_noteInfo[m_iEndIndex].end - m_noteInfo[m_iEndIndex].start);
+					
 				}
 				else
 					break;
