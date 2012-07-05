@@ -6,6 +6,7 @@ package logics
 	import flash.events.SampleDataEvent;
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
+	import flash.media.SoundTransform;
 	import flash.net.*;
 	import flash.net.URLLoader;
 
@@ -17,19 +18,24 @@ package logics
 			m_sound = new Sound();
 			m_sound.addEventListener( SampleDataEvent.SAMPLE_DATA, onSampleData );
 			m_restLength = 10;
+			m_amplitude = 1.0;
+			m_soundTransform = new SoundTransform();
 			
 		}
 		
+		private var m_noteNew : Boolean;
 		private static var m_instance : SoundMgr = null;
 		private var m_curNote : String;
 		private var m_sound : Sound;
-		private var m_channel : SoundChannel;
+		private var m_curChannel : SoundChannel;
+		private var m_lastChannel : SoundChannel;
 		private var m_amplitude : Number;
 		private var m_restLength : int;
 		public static const SAMPLE_RATE :int = 44100;
 		public static const BUFFER_SIZE :int = 8192;
 		private var m_noteFreq : Array;
 		private var m_urlLoader : URLLoader;
+		private var m_soundTransform : SoundTransform;
 		
 		/*
 			load note_freq json file, and input the data into a map
@@ -40,7 +46,7 @@ package logics
 			m_urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
 			m_urlLoader.addEventListener(Event.COMPLETE, parseJson);
 			m_urlLoader.addEventListener(IOErrorEvent.IO_ERROR, handleError);
-			m_urlLoader.load(new URLRequest("note_freq.json"));
+			m_urlLoader.load(new URLRequest("F:\\MidiHero\\midi-hero\\trunk\\game\\midi_hero\\src\\note_freq.json"));
 		}
 		
 		private function handleError(event : IOErrorEvent) : void
@@ -76,37 +82,72 @@ package logics
 		// to play a note with a given frequency and a given length
 		public function changeNote(name : String, len : Number) : void
 		{
+			if (m_curChannel != null)
+			{
+				m_lastChannel = m_curChannel;
+				m_lastChannel.soundTransform.volume = 0;
+			}
 			m_curNote = name;
+			m_noteNew = true;
+			m_soundTransform.volume = 1.0;
 			m_restLength = Math.floor(len * SAMPLE_RATE);
-			m_channel = m_sound.play();
+			m_curChannel = m_sound.play();
+			m_curChannel.soundTransform.volume = 1.0;
+			
+			
 		}
 		
 		// given name of note, return its frequency
 		private function getFreq(name : String) : Number
 		{
+			for (var i: int = 0; i < m_noteFreq.length; ++i)
+			{
+				
+				if (m_noteFreq[i].name == name)
+					return m_noteFreq[i].freq;
+			}
 			return 0;
+		}
+		
+		private function squareWave(sig : Number) : Number
+		{
+			if (sig > 0) return 2;
+			else return -2;
 		}
 		
 		private function onSampleData(event : SampleDataEvent) : void
 		{
 			var sample:Number;
 			var freq : Number = getFreq(m_curNote);
-			
-			if (m_restLength == 0 && m_channel != null)
+			if (m_restLength == 0 && m_curChannel != null)
 			{
-			 	m_channel.stop();
+				m_curChannel.soundTransform.volume = 0;
+			 	m_curChannel.stop();
 				return;
 			}
 			
 			for( var i:int = 0; i < 8192; i++ )
 			{
+				var scale : Number;
 				if (m_restLength <= 0)
 					return;
 				m_restLength -= 1;
-				sample = Math.sin( Math.PI * 2 * freq * ( event.position + i ) / SAMPLE_RATE ) * m_amplitude;
+				
+				if (i < 100 && m_noteNew)
+					scale = i / 100;
+				else if (m_restLength < 100)
+				{
+					
+					scale = m_restLength / 100;
+				}
+				else scale = 1.0;
+			
+				scale = scale * scale * scale;
+				sample = squareWave(Math.sin( Math.PI * 2 * freq * ( event.position + i ) / SAMPLE_RATE )) * m_amplitude * scale;
 				event.data.writeFloat( sample );
 				event.data.writeFloat( sample );
 			}
+			m_noteNew = false;
 		}
 	}
 }

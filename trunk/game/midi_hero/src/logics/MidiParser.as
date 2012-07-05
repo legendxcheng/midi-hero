@@ -14,6 +14,7 @@ package logics
 	{
 		private var m_json : Array;
 		private var m_urlLoader : URLLoader;
+			
 		public function MidiParser()
 		{
 			m_urlLoader = new URLLoader();
@@ -110,11 +111,13 @@ package logics
 						tmp += 1;
 					else tmp -= 1;
 				}
-				ni.push({start: m_json[i].start * 3 , end : m_json[i].end * 3, notePos : tmp * 2, 
-					high : (m_json[i].octave - 3) * 12 + calcHigh(m_json[i].pitch)});
+				var noteName : String = m_json[i].octave.toString() + m_json[i].pitch;
+				ni.push({start: m_json[i].start , end : m_json[i].end, notePos : tmp * 2, 
+					high : (m_json[i].octave - 3) * 12 + calcHigh(m_json[i].pitch) + 20, name : noteName});
 			}
 			
 			sm.setNoteInfo(ni);
+			
 			
 		}
 		
