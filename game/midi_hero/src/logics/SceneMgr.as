@@ -17,6 +17,7 @@ package logics
 		private var m_iStartIndex : int; // the start index of the note info in scene
 		private var m_iEndIndex : int; // the end index of the note info in scene
 		private var m_soundPlayX : int; // the x coor where a note is played
+		private var m_soundPlayFloor : int; // sound play floor y coor
 		private var m_noteSprite : Array;
 		private var m_isPlaying : Boolean;
 		private var m_noteInfo : Array;
@@ -77,6 +78,16 @@ package logics
 		*/
 		
 		
+		public function get soundPlayX():int
+		{
+			return m_soundPlayX;
+		}
+
+		public function get soundPlayFloor():int
+		{
+			return m_soundPlayFloor;
+		}
+
 		public function get notes():Notes
 		{
 			return m_notes;
@@ -194,7 +205,7 @@ package logics
 					//note.resetNoteWidth(100);
 					//note.changeNote(0xFFFFFF00, 300);
 					var nco : uint = m_colorList[m_noteInfo[m_iEndIndex].high % 12];
-					note.changeNote(nco, m_noteInfo[m_iEndIndex].high * 15 - 400);
+					note.changeNote(nco, m_noteInfo[m_iEndIndex].high * 8 - 150);
 					
 					
 					
@@ -207,6 +218,7 @@ package logics
 			//	secondly, modify each note's position
 			var si : int = m_startIndex;
 			var ii : int = m_iStartIndex;
+			m_soundPlayFloor = 480;
 			
 			while (m_endIndex != -1)
 			{
@@ -219,13 +231,22 @@ package logics
 				var tox : int = m_noteSprite[si].x;
 				m_noteSprite[si].x = Math.round(768 + (m_noteInfo[ii].start - timeElap) / timeScale);
 				
+				if (m_noteSprite[si].x <= m_soundPlayX && m_noteSprite[si].x + m_noteSprite[si].width >= m_soundPlayX)
+				{
+					m_soundPlayFloor = 426 - m_noteSprite[si].height;
+				}
+				
 				if (tox > m_soundPlayX && m_noteSprite[si].x <= m_soundPlayX)
 				{
 					/*
 					Here I play the note sound.
 					*/
 					var sndMgr : SoundMgr = SoundMgr.getInstance();
-					sndMgr.changeNote(m_noteInfo[si].name, m_noteInfo[si].end - m_noteInfo[si].start);
+					if (Math.abs(m_noteInfo[si].start - 82.0) < 0.05)
+					{
+						trace("11");
+					}
+					sndMgr.changeNote(m_noteInfo[ii].name, m_noteInfo[ii].end - m_noteInfo[ii].start);
 				}
 				
 				// now draw each note on m_notes

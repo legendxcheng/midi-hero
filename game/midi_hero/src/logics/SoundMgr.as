@@ -121,7 +121,7 @@ package logics
 			var freq : Number = getFreq(m_curNote);
 			if (m_restLength == 0 && m_curChannel != null)
 			{
-				m_curChannel.soundTransform.volume = 0;
+				//m_curChannel.soundTransform.volume = 0;
 			 	m_curChannel.stop();
 				return;
 			}
@@ -133,7 +133,7 @@ package logics
 					return;
 				m_restLength -= 1;
 				
-					sample = squareWave(Math.sin( Math.PI * 2 * freq * ( event.position + i ) / SAMPLE_RATE )) * m_amplitude;
+				sample = squareWave(Math.sin( Math.PI * 2 * freq * ( event.position + i ) / SAMPLE_RATE )) * m_amplitude;
 				event.data.writeFloat( sample );
 				event.data.writeFloat( sample );
 			}
