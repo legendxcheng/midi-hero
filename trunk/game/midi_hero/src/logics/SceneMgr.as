@@ -16,7 +16,7 @@ package logics
 		private var m_endIndex : int; // the end index of the note sprites in scene
 		private var m_iStartIndex : int; // the start index of the note info in scene
 		private var m_iEndIndex : int; // the end index of the note info in scene
-		
+		private var m_soundPlayX : int; // the x coor where a note is played
 		private var m_noteSprite : Array;
 		private var m_isPlaying : Boolean;
 		private var m_noteInfo : Array;
@@ -35,6 +35,7 @@ package logics
 
 			FlxG.framerate = 30;
 			
+			m_soundPlayX = 384;
 			m_noteSprite = new Array();
 			// insert 100 notes for future use
 			for (var i: int = 0; i < 100; ++i)
@@ -160,6 +161,9 @@ package logics
 			// change iStartIndex and iEndIndex
 			var lx : Number;
 			var rx : Number;
+			
+			var notePlayId : Number;
+			
 			while (true)
 			{
 				//var lx : Number = ((m_noteInfo[m_iStartIndex].start - timeElap) / timeScale + 768);
@@ -192,11 +196,7 @@ package logics
 					var nco : uint = m_colorList[m_noteInfo[m_iEndIndex].high % 12];
 					note.changeNote(nco, m_noteInfo[m_iEndIndex].high * 15 - 400);
 					
-					/*
-						Here I play the note sound.
-					*/
-					var sndMgr : SoundMgr = SoundMgr.getInstance();
-					sndMgr.changeNote(m_noteInfo[m_iEndIndex].name, m_noteInfo[m_iEndIndex].end - m_noteInfo[m_iEndIndex].start);
+					
 					
 				}
 				else
@@ -216,7 +216,17 @@ package logics
 					flag = true;
 				else flag = false;
 				
+				var tox : int = m_noteSprite[si].x;
 				m_noteSprite[si].x = Math.round(768 + (m_noteInfo[ii].start - timeElap) / timeScale);
+				
+				if (tox > m_soundPlayX && m_noteSprite[si].x <= m_soundPlayX)
+				{
+					/*
+					Here I play the note sound.
+					*/
+					var sndMgr : SoundMgr = SoundMgr.getInstance();
+					sndMgr.changeNote(m_noteInfo[si].name, m_noteInfo[si].end - m_noteInfo[si].start);
+				}
 				
 				// now draw each note on m_notes
 				
