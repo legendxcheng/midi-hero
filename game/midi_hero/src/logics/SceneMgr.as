@@ -1,9 +1,13 @@
 package logics
 {
+	import flash.geom.Rectangle;
+	
+	import org.flixel.FlxG;
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxSprite;
-	import org.flixel.FlxG;
-	import sprites.Note;
+	
+	import sprites.Notes;
+	
 
 	// class that controls note sprite
 	public class SceneMgr extends FlxGroup
@@ -18,6 +22,7 @@ package logics
 		private var m_noteInfo : Array;
 		private var m_colorList : Array;
 		
+		private var m_notes : Notes;
 		
 		
 		
@@ -26,6 +31,8 @@ package logics
 		public function SceneMgr()
 		{	
 			
+
+
 			FlxG.framerate = 30;
 			
 			m_noteSprite = new Array();
@@ -58,7 +65,8 @@ package logics
 			m_colorList.push(0xFFD1D2D4);
 			
 			
-			
+			m_notes = new Notes();
+			add(m_notes);
 			
 		}
 		
@@ -68,6 +76,46 @@ package logics
 		*/
 		
 		
+		public function get notes():Notes
+		{
+			return m_notes;
+		}
+
+		public function get iEndIndex():int
+		{
+			return m_iEndIndex;
+		}
+
+		public function get iStartIndex():int
+		{
+			return m_iStartIndex;
+		}
+
+		public function get colorList():Array
+		{
+			return m_colorList;
+		}
+
+		public function get noteInfo():Array
+		{
+			return m_noteInfo;
+		}
+
+		public function get noteSprite():Array
+		{
+			return m_noteSprite;
+		}
+
+		public function get endIndex():int
+		{
+			return m_endIndex;
+		}
+
+		public function get startIndex():int
+		{
+			return m_startIndex;
+		}
+
 		public function startScore() : void
 		{
 			resetScore();
@@ -84,7 +132,7 @@ package logics
 		
 		// used only in note sprite array
 		// for conveniently get next or previous index
-		private function nextIndex(k : int) : int
+		public function nextIndex(k : int) : int
 		{
 			if (k == 99)
 				return 0;
@@ -119,7 +167,7 @@ package logics
 				if (rx < 0)	// remove a note sprite
 				{
 					++m_iStartIndex;
-					remove(m_noteSprite[m_startIndex]);
+					
 					m_startIndex = nextIndex(m_startIndex);
 				}
 				else 
@@ -134,7 +182,7 @@ package logics
 				{
 					++m_iEndIndex;
 					m_endIndex = nextIndex(m_endIndex);
-					add(m_noteSprite[m_endIndex]);
+				
 					
 					// initialize note's figure
 					var note : Note = m_noteSprite[m_endIndex];
@@ -142,7 +190,7 @@ package logics
 					//note.resetNoteWidth(100);
 					//note.changeNote(0xFFFFFF00, 300);
 					var nco : uint = m_colorList[m_noteInfo[m_iEndIndex].high % 12];
-					note.changeNote(nco, m_noteInfo[m_iEndIndex].high * 10 - 120);
+					note.changeNote(nco, m_noteInfo[m_iEndIndex].high * 15 - 400);
 					
 					/*
 						Here I play the note sound.
@@ -159,6 +207,7 @@ package logics
 			//	secondly, modify each note's position
 			var si : int = m_startIndex;
 			var ii : int = m_iStartIndex;
+			
 			while (m_endIndex != -1)
 			{
 				
@@ -169,6 +218,9 @@ package logics
 				
 				m_noteSprite[si].x = Math.round(768 + (m_noteInfo[ii].start - timeElap) / timeScale);
 				
+				// now draw each note on m_notes
+				
+				
 				// loop end
 				si = nextIndex(si);
 				++ii;
@@ -178,6 +230,16 @@ package logics
 			}
 			
 		}
+		
+		
+		public function drawNotes() : void
+		{
+			// update m_notes
+			
+			
+			
+		}
+		
 		
 		private static var m_instance : SceneMgr = null;
 		

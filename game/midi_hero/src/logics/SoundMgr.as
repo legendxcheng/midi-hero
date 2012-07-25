@@ -85,7 +85,7 @@ package logics
 			if (m_curChannel != null)
 			{
 				m_lastChannel = m_curChannel;
-				m_lastChannel.soundTransform.volume = 0;
+				//m_lastChannel.soundTransform.volume = 0;
 			}
 			m_curNote = name;
 			m_noteNew = true;
@@ -133,17 +133,7 @@ package logics
 					return;
 				m_restLength -= 1;
 				
-				if (i < 100 && m_noteNew)
-					scale = i / 100;
-				else if (m_restLength < 100)
-				{
-					
-					scale = m_restLength / 100;
-				}
-				else scale = 1.0;
-			
-				scale = scale * scale * scale;
-				sample = squareWave(Math.sin( Math.PI * 2 * freq * ( event.position + i ) / SAMPLE_RATE )) * m_amplitude * scale;
+					sample = squareWave(Math.sin( Math.PI * 2 * freq * ( event.position + i ) / SAMPLE_RATE )) * m_amplitude;
 				event.data.writeFloat( sample );
 				event.data.writeFloat( sample );
 			}

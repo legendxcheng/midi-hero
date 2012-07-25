@@ -3,7 +3,7 @@ package states
 {
 	import org.flixel.*;
 	import logics.MidiParser;
-	import sprites.Note;
+	import logics.Note;
 	import logics.GameLogic;
 	import logics.UIMgr;
 	import logics.SceneMgr;
@@ -15,6 +15,8 @@ package states
 		private var m_gameLogic : GameLogic;
 		override public function create():void
 		{
+			add(SceneMgr.getInstance());
+			
 			m_gameLogic = GameLogic.getInstance();
 			add(m_gameLogic);
 			
@@ -24,7 +26,7 @@ package states
 			m_uiMgr = new UIMgr();
 			add(m_uiMgr);
 			
-			add(SceneMgr.getInstance());
+			
 			
 			m_soundMgr = SoundMgr.getInstance();
 			m_soundMgr.loadNoteFreq();
