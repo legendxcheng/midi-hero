@@ -15,7 +15,7 @@ package logics
 		{
 			//m_timer = new FlxTimer();
 			m_timeElapsed = 0;
-			m_timeScale = 0.01;
+			m_timeScale = 0.0075;
 		}
 				
 		public function get timeScale():Number

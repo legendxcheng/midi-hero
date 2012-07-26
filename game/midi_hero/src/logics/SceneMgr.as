@@ -22,12 +22,29 @@ package logics
 		private var m_isPlaying : Boolean;
 		private var m_noteInfo : Array;
 		private var m_colorList : Array;
-		
+		private var m_currentNoteId : int;
 		private var m_notes : Notes;
 		
 		
 		
 		
+		public function playSound() : void
+		{
+			
+			/*
+			Here I play the note sound.
+			*/
+			var sndMgr : SoundMgr = SoundMgr.getInstance();
+			sndMgr.changeNote(m_noteInfo[m_currentNoteId].name, 20.0);
+				//m_noteInfo[m_currentNoteId].end - m_noteInfo[m_currentNoteId].start);
+			
+		}
+		
+		public function stopSound() : void
+		{
+			var sndMgr : SoundMgr = SoundMgr.getInstance();
+			sndMgr.stopSound();
+		}
 		
 		public function SceneMgr()
 		{	
@@ -37,6 +54,7 @@ package logics
 			FlxG.framerate = 30;
 			
 			m_soundPlayX = 384;
+			m_soundPlayFloor = 480;
 			m_noteSprite = new Array();
 			// insert 100 notes for future use
 			for (var i: int = 0; i < 100; ++i)
@@ -205,7 +223,7 @@ package logics
 					//note.resetNoteWidth(100);
 					//note.changeNote(0xFFFFFF00, 300);
 					var nco : uint = m_colorList[m_noteInfo[m_iEndIndex].high % 12];
-					note.changeNote(nco, m_noteInfo[m_iEndIndex].high * 8 - 150);
+					note.changeNote(nco, m_noteInfo[m_iEndIndex].high * 4);
 					
 					
 					
@@ -234,20 +252,10 @@ package logics
 				if (m_noteSprite[si].x <= m_soundPlayX && m_noteSprite[si].x + m_noteSprite[si].width >= m_soundPlayX)
 				{
 					m_soundPlayFloor = 426 - m_noteSprite[si].height;
+					m_currentNoteId = ii;
 				}
 				
-				if (tox > m_soundPlayX && m_noteSprite[si].x <= m_soundPlayX)
-				{
-					/*
-					Here I play the note sound.
-					*/
-					var sndMgr : SoundMgr = SoundMgr.getInstance();
-					if (Math.abs(m_noteInfo[si].start - 82.0) < 0.05)
-					{
-						trace("11");
-					}
-					sndMgr.changeNote(m_noteInfo[ii].name, m_noteInfo[ii].end - m_noteInfo[ii].start);
-				}
+
 				
 				// now draw each note on m_notes
 				

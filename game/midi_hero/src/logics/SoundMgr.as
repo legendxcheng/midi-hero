@@ -9,6 +9,7 @@ package logics
 	import flash.media.SoundTransform;
 	import flash.net.*;
 	import flash.net.URLLoader;
+	import flash.media.SoundMixer;
 
 
 	public class SoundMgr
@@ -78,6 +79,18 @@ package logics
 			return m_instance;
 		}
 		
+		public function stopSound() : void
+		{
+			SoundMixer.stopAll();
+			/*
+			if (m_curChannel != null)
+			{
+				m_lastChannel = m_curChannel;
+				m_lastChannel.soundTransform.volume = 0;
+			}*/
+			//m_curChannel.soundTransform.volume = 0;
+		}
+		
 		// call by ouside
 		// to play a note with a given frequency and a given length
 		public function changeNote(name : String, len : Number) : void
@@ -91,6 +104,7 @@ package logics
 			m_noteNew = true;
 			m_soundTransform.volume = 1.0;
 			m_restLength = Math.floor(len * SAMPLE_RATE);
+			
 			m_curChannel = m_sound.play();
 			m_curChannel.soundTransform.volume = 1.0;
 			
@@ -126,17 +140,21 @@ package logics
 				return;
 			}
 			
-			for( var i:int = 0; i < 8192; i++ )
+			for( var i:int = 0; i < 4096; i++ )
 			{
 				var scale : Number;
 				if (m_restLength <= 0)
+				{
+					//trace(i);
 					return;
+				}
 				m_restLength -= 1;
 				
 				sample = squareWave(Math.sin( Math.PI * 2 * freq * ( event.position + i ) / SAMPLE_RATE )) * m_amplitude;
 				event.data.writeFloat( sample );
 				event.data.writeFloat( sample );
 			}
+			//trace(8192);
 			m_noteNew = false;
 		}
 	}
