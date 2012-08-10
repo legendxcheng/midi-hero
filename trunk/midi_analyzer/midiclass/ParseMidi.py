@@ -17,7 +17,7 @@ faddr2 = 0
 # delve in a part of the element
 # until it is note then write it out
 def delveIn(n):
-    print n
+    #print n
     global ores
     if (isinstance(n, note.Note)):
         try:

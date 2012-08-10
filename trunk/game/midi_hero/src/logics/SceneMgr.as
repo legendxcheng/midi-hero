@@ -26,7 +26,19 @@ package logics
 		private var m_notes : Notes;
 		
 		
+		public function getHeightOffset() : int
+		{
+			if (m_currentNoteId + 1 <m_noteInfo.length)
+				return m_noteInfo[m_currentNoteId + 1].high - m_noteInfo[m_currentNoteId].high;
+			return 0;
+		}
 		
+		public function getWidthOffset() : Number
+		{
+			if (m_currentNoteId + 1 <m_noteInfo.length)
+				return m_noteInfo[m_currentNoteId + 1].start - m_noteInfo[m_currentNoteId].end;
+			return 0;
+		}
 		
 		public function playSound() : void
 		{
@@ -193,10 +205,11 @@ package logics
 			
 			var notePlayId : Number;
 			
-			while (true)
+			while (m_iStartIndex < m_noteInfo.length)
 			{
 				//var lx : Number = ((m_noteInfo[m_iStartIndex].start - timeElap) / timeScale + 768);
 				rx = ((m_noteInfo[m_iStartIndex].end - timeElap) / timeScale + 768);
+				trace(m_iStartIndex);
 				if (rx < 0)	// remove a note sprite
 				{
 					++m_iStartIndex;
@@ -238,7 +251,7 @@ package logics
 			var ii : int = m_iStartIndex;
 			m_soundPlayFloor = 480;
 			
-			while (m_endIndex != -1)
+			while (m_endIndex != -1 && ii < m_noteInfo.length)
 			{
 				
 				var flag : Boolean;
