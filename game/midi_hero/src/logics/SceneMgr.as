@@ -6,6 +6,7 @@ package logics
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxSprite;
 	
+	import sprites.Hero;
 	import sprites.Notes;
 	
 
@@ -25,6 +26,20 @@ package logics
 		private var m_currentNoteId : int;
 		private var m_notes : Notes;
 		
+		
+		public function getFirstNoteX() : int
+		{
+			if (m_noteSprite[0].x > 0)
+				return m_noteSprite[0].x;
+			return 2000;
+		}
+		
+		public function getFirstNoteY() : int
+		{
+			return 430 - m_noteSprite[0].height - 4;
+		}
+		
+
 		
 		public function getHeightOffset() : int
 		{
@@ -209,7 +224,7 @@ package logics
 			{
 				//var lx : Number = ((m_noteInfo[m_iStartIndex].start - timeElap) / timeScale + 768);
 				rx = ((m_noteInfo[m_iStartIndex].end - timeElap) / timeScale + 768);
-				trace(m_iStartIndex);
+				//trace(m_iStartIndex);
 				if (rx < 0)	// remove a note sprite
 				{
 					++m_iStartIndex;
