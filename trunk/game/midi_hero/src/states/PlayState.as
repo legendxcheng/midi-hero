@@ -34,7 +34,7 @@ package states
 			
 			m_hero = new Hero();			
 			add(m_hero);
-			m_hero.x = SceneMgr.getInstance().soundPlayX;
+			m_hero.x = 200000;
 			m_hero.y = 50;
 			
 			m_soundMgr = SoundMgr.getInstance();
