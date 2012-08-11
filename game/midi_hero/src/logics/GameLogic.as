@@ -10,6 +10,7 @@ package logics
 		private var m_timeElapsed : Number;
 		private var m_timer : FlxTimer;
 		private var m_timeScale : Number;	// how much time coresponds to 1 pixel
+		public static var screenWidth = 640;
 		
 		public function GameLogic()
 		{

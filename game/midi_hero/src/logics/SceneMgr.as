@@ -24,8 +24,25 @@ package logics
 		private var m_noteInfo : Array;
 		private var m_colorList : Array;
 		private var m_currentNoteId : int;
+		private var m_currentNoteX : int;
 		private var m_notes : Notes;
 		
+		public function get currentNoteId():int
+		{
+			return m_currentNoteId;
+		}
+
+		public function getCurrentNoteLength() : int
+		{
+			return Math.floor(
+				(m_noteInfo[m_currentNoteId].end - m_noteInfo[m_currentNoteId].start) 
+					/ GameLogic.getInstance().timeScale);
+		}
+		
+		public function getCurrentNoteX() : int
+		{
+			return m_currentNoteX;
+		}
 		
 		public function getFirstNoteX() : int
 		{
@@ -78,9 +95,9 @@ package logics
 			
 
 
-			FlxG.framerate = 30;
+			FlxG.framerate = 60;
 			
-			m_soundPlayX = 384;
+			m_soundPlayX = GameLogic.screenWidth / 2;
 			m_soundPlayFloor = 480;
 			m_noteSprite = new Array();
 			// insert 100 notes for future use
@@ -222,8 +239,8 @@ package logics
 			
 			while (m_iStartIndex < m_noteInfo.length)
 			{
-				//var lx : Number = ((m_noteInfo[m_iStartIndex].start - timeElap) / timeScale + 768);
-				rx = ((m_noteInfo[m_iStartIndex].end - timeElap) / timeScale + 768);
+				//var lx : Number = ((m_noteInfo[m_iStartIndex].start - timeElap) / timeScale + GameLogic.screenWidth);
+				rx = ((m_noteInfo[m_iStartIndex].end - timeElap) / timeScale + GameLogic.screenWidth);
 				//trace(m_iStartIndex);
 				if (rx < 0)	// remove a note sprite
 				{
@@ -238,8 +255,8 @@ package logics
 			
 			while (m_iEndIndex < m_noteInfo.length - 1)
 			{
-				lx = ((m_noteInfo[m_iEndIndex + 1].start - timeElap) / timeScale + 768);
-				if (lx < 768)	// add a note sprite
+				lx = ((m_noteInfo[m_iEndIndex + 1].start - timeElap) / timeScale + GameLogic.screenWidth);
+				if (lx < GameLogic.screenWidth)	// add a note sprite
 				{
 					++m_iEndIndex;
 					m_endIndex = nextIndex(m_endIndex);
@@ -275,12 +292,13 @@ package logics
 				else flag = false;
 				
 				var tox : int = m_noteSprite[si].x;
-				m_noteSprite[si].x = Math.round(768 + (m_noteInfo[ii].start - timeElap) / timeScale);
+				m_noteSprite[si].x = Math.round(GameLogic.screenWidth + (m_noteInfo[ii].start - timeElap) / timeScale);
 				
 				if (m_noteSprite[si].x <= m_soundPlayX && m_noteSprite[si].x + m_noteSprite[si].width >= m_soundPlayX)
 				{
 					m_soundPlayFloor = 426 - m_noteSprite[si].height;
 					m_currentNoteId = ii;
+					m_currentNoteX = m_noteSprite[si].x;
 				}
 				
 
