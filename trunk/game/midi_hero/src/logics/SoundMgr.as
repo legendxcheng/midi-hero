@@ -140,7 +140,7 @@ package logics
 				return;
 			}
 			
-			for( var i:int = 0; i < 4096; i++ )
+			for( var i:int = 0; i < 8192; i++ )
 			{
 				var scale : Number;
 				if (m_restLength <= 0)

@@ -25,7 +25,13 @@ package logics
 		private var m_colorList : Array;
 		private var m_currentNoteId : int;
 		private var m_currentNoteX : int;
+		private var m_currentNoteColor : uint;
 		private var m_notes : Notes;
+		
+		public function getCurrentNoteColor() : uint
+		{
+			return m_currentNoteColor;
+		}
 		
 		public function get currentNoteId():int
 		{
@@ -53,7 +59,7 @@ package logics
 		
 		public function getFirstNoteY() : int
 		{
-			return 430 - m_noteSprite[0].height - 4;
+			return GameLogic.screenHeight - 50 - m_noteSprite[0].height - 4;
 		}
 		
 
@@ -98,7 +104,7 @@ package logics
 			FlxG.framerate = 60;
 			
 			m_soundPlayX = GameLogic.screenWidth / 2;
-			m_soundPlayFloor = 480;
+			m_soundPlayFloor = GameLogic.screenHeight;
 			m_noteSprite = new Array();
 			// insert 100 notes for future use
 			for (var i: int = 0; i < 100; ++i)
@@ -281,7 +287,7 @@ package logics
 			//	secondly, modify each note's position
 			var si : int = m_startIndex;
 			var ii : int = m_iStartIndex;
-			m_soundPlayFloor = 480;
+			m_soundPlayFloor = GameLogic.screenHeight;
 			
 			while (m_endIndex != -1 && ii < m_noteInfo.length)
 			{
@@ -296,7 +302,8 @@ package logics
 				
 				if (m_noteSprite[si].x <= m_soundPlayX && m_noteSprite[si].x + m_noteSprite[si].width >= m_soundPlayX)
 				{
-					m_soundPlayFloor = 426 - m_noteSprite[si].height;
+					m_soundPlayFloor = GameLogic.screenHeight - 50 - 4 - m_noteSprite[si].height;
+					m_currentNoteColor = m_noteSprite[si].color;
 					m_currentNoteId = ii;
 					m_currentNoteX = m_noteSprite[si].x;
 				}

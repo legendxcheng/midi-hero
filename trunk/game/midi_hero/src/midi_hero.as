@@ -5,7 +5,7 @@ package
 	import org.flixel.*;
 	
 	import states.*; //Allows you to refer to flixel objects in your code
-	[SWF(width="640", height="480", backgroundColor="#FFFFFF", frameRate="30")] //Set the size and color of the Flash file
+	[SWF(width="640", height="480", backgroundColor="#272822", frameRate="30")] //Set the size and color of the Flash file
 	
 	public class midi_hero extends FlxGame
 	{

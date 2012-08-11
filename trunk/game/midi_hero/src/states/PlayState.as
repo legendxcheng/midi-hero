@@ -29,7 +29,7 @@ package states
 			var mp : MidiParser = MidiParser.getInstance();
 			mp.loadJson("f:\\test.jsn");		
 			
-			m_uiMgr = new UIMgr();
+			m_uiMgr = UIMgr.getInstance();
 			add(m_uiMgr);
 			
 			m_hero = new Hero();			
