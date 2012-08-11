@@ -35,16 +35,30 @@ package logics
 			return m_instance;
 		}
 		
-		public function addCoverage(right : int, left : int, noteId : int) : void
+		public function addCoverage(right : int, left : int, noteId : int, hy : int) : void
 		{
 			var tmp : int = Math.ceil(((right - left) * 100 / SceneMgr.getInstance().getCurrentNoteLength() ));
 			if (tmp >= 95) tmp = 100;
 			m_score += tmp;
+			
+			UIMgr.getInstance().addCoverageTxt(SceneMgr.getInstance().getCurrentNoteColor(), hy, tmp);
 		}
 		
 		public function setNoteState(cover : int) : void
 		{
 			m_noteState = cover / SceneMgr.getInstance().getCurrentNoteLength();
+			if (m_noteState > 0.95)
+				m_noteState = 1.00;
+		}
+		
+		public function sendCoverage() : void // call by Hero calss
+		{
+			
+		}
+		
+		public function sendNewNote()
+		{
+			
 		}
 	}
 }
