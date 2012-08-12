@@ -132,6 +132,8 @@ package logics
 		private function onSampleData(event : SampleDataEvent) : void
 		{
 			var sample:Number;
+			var sampleValue : Number = m_amplitude * 2;
+			
 			var freq : Number = getFreq(m_curNote);
 			if (m_restLength == 0 && m_curChannel != null)
 			{
@@ -150,7 +152,15 @@ package logics
 				}
 				m_restLength -= 1;
 				
-				sample = squareWave(Math.sin( Math.PI * 2 * freq * ( event.position + i ) / SAMPLE_RATE )) * m_amplitude;
+			
+				//var tmp : Number = Math.sin( Math.PI * 2 * freq * ( event.position + i ) / SAMPLE_RATE ) * m_amplitude;
+				var tmp : Number = freq * ( event.position + i ) / SAMPLE_RATE;
+				tmp = tmp - Math.floor(tmp);
+				if (tmp <= 0.5) 
+					sample = sampleValue;
+				else sample = -sampleValue;
+				//else sample = -2;
+				//sample = squareWave(Math.sin( Math.PI * 2 * freq * ( event.position + i ) / SAMPLE_RATE )) * m_amplitude;
 				event.data.writeFloat( sample );
 				event.data.writeFloat( sample );
 			}

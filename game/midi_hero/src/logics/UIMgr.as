@@ -21,10 +21,10 @@ package logics
 		private var m_cStart : int;
 		private var m_cEnd : int;
 		private var m_coverageTxt : Array;
+		private var m_cNum : int;
 		
-		private var m_sStart : int;
-		private var m_sEnd : int;
-		private var m_streakTxt : Array;
+		private var m_streakTxt : FlxText;
+
 		
 		private static var m_instance : UIMgr = null;
 		
@@ -44,6 +44,7 @@ package logics
 		
 		public function addCoverageTxt(co : Number, hy : Number, pct : Number) : void
 		{
+			++m_cNum;
 			++m_cEnd;
 			if (m_cEnd == m_coverageTxt.length)
 				m_cEnd = 0;
@@ -54,20 +55,21 @@ package logics
 			ft.alpha = 1.0;
 			ft.size = getCoverageSize(pct);
 			ft.color = co;
+
+			add(ft);
 			
 		}
 		
 		public function addStreakTxt(hy: int, stk : int) : void
 		{
-			++m_sEnd;
-			if (m_sEnd == m_streakTxt.length)
-				m_sEnd = 0;
-			var ft : FlxText = m_streakTxt[m_sEnd];
-			ft.text = "+" + (stk * 100).toString() + "% Streak " + stk.toString() + " !";
-			ft.x = GameLogic.screenWidth / 2;
-			ft.y = hy - 50;
-			ft.alpha = 1.0;
-			ft.size = 14;
+			
+			m_streakTxt.text = "+" + (stk * 100).toString() + "% Streak " + stk.toString() + " !";
+			m_streakTxt.x = GameLogic.screenWidth / 2;
+			m_streakTxt.y = hy - 50;
+			m_streakTxt.alpha = 1.0;
+			m_streakTxt.size = 14;
+
+
 			
 		}
 		
@@ -75,9 +77,9 @@ package logics
 		{
 			super(MaxSize);
 			m_time = new FlxText(150, 0, 200, "");
-			//m_fps = new FlxText(300, 0, 200, "");
+			m_fps = new FlxText(300, 0, 200, "");
 			m_time.scale = new FlxPoint(2.5, 2.5);
-			//m_fps.scale = new FlxPoint(3.0, 3.0);
+			m_fps.scale = new FlxPoint(3.0, 3.0);
 
 			m_score = new FlxText(450, 0, 200, "");
 			m_score.scale = new FlxPoint(2.5, 2.5);
@@ -86,45 +88,40 @@ package logics
 			m_notePercent.scale = new FlxPoint(1.0, 1.0);
 			
 			add(m_time);
-			//add(m_fps);
+			add(m_fps);
 			add(m_score);
 			add(m_notePercent);
 			
 			m_cStart = 0;
 			m_cEnd = -1;
 			m_coverageTxt = new Array();
+			m_cNum = 0;
 			
-			for (var i : int = 0; i < 50; ++i)
+			for (var i : int = 0; i < 10; ++i)
 			{
 				var ft : FlxText = new FlxText(0, 0, 200, "");
 				m_coverageTxt.push(ft);
 				ft.alignment = "left";
-				add(ft);
+
 			}
 			
-			m_sStart = 0;
-			m_sEnd = -1;
-			m_streakTxt = new Array();
+			m_streakTxt = new FlxText(500, 50, 200, "");
+			m_streakTxt.size = 20;
+			add(m_streakTxt);
 			
-			for (var i : int = 0; i < 20; ++i)
-			{
-				var ft : FlxText = new FlxText(0, 0, 200, "");
-				m_streakTxt.push(ft);
-				ft.alignment = "left";
-				add(ft);
-			}
 		}
 		
 		override public function preUpdate() : void
 		{
 			m_time.text = "Time: " + GameLogic.getInstance().getTime().toFixed(2);
-			//m_fps.text = (1 / FlxG.elapsed).toString();
+			m_fps.text = (1 / FlxG.elapsed).toString();
 			m_score.text = "Score: " + Evaluator.getInstance().score.toString() + "%";
 			m_notePercent.text = Evaluator.getInstance().noteState.toFixed(2);
 			
+			
 			// Move m_bonusTxt to left
 			var ind : int = m_cStart;
-			while(m_cEnd >= 0)
+			while(m_cNum > 0)
 			{
 				var ft : FlxText = m_coverageTxt[ind];
 				ft.x -= FlxG.elapsed / GameLogic.getInstance().timeScale;
@@ -132,8 +129,10 @@ package logics
 				ft.alpha -= 0.02;
 				if (ft.alpha <= 0)
 				{
+					remove(ft);
 					if (m_cStart == m_cEnd)
 					{
+						--m_cNum;
 						++m_cStart;
 						if (m_cStart == m_coverageTxt.length)
 							m_cStart = 0;
@@ -141,6 +140,7 @@ package logics
 					}
 					else
 					{
+						--m_cNum;
 						++m_cStart;
 						if (m_cStart == m_coverageTxt.length)
 							m_cStart = 0;
@@ -158,40 +158,9 @@ package logics
 				
 			}
 			
-			ind = m_sStart;
-			while(m_sEnd >= 0)
-			{
-				var ft : FlxText = m_streakTxt[ind];
-				ft.x -= FlxG.elapsed / GameLogic.getInstance().timeScale;
-				ft.y -= 0.2;
-				ft.alpha *= 0.995;
-				if (ft.x + ft.width <= 0)
-				{
-					if (m_sStart == m_sEnd)
-					{
-						++m_sStart;
-						if (m_sStart == m_streakTxt.length)
-							m_sStart = 0;
-						break;
-					}
-					else
-					{
-						++m_sStart;
-						if (m_sStart == m_streakTxt.length)
-							m_sStart = 0;
-					}
-				}
-				
-				
-				if (ind == m_sEnd)
-					break;
-				++ind;
-				if (ind == m_streakTxt.length)
-				{
-					ind = 0;
-				}
-				
-			}
+			
+			
+			
 		}
 	}
 	
