@@ -5,6 +5,8 @@ package logics
 	{
 		public function Evaluator()
 		{
+			m_noteTot = 0;
+			m_noteHit = 0;
 			m_score = 0;
 			m_streak = 0;
 		}
@@ -15,6 +17,8 @@ package logics
 		private var m_noteState : Number;
 		private var m_streak : int;
 		private var m_lastNoteId : int;
+		private var m_noteTot;
+		private var m_noteHit;
 		
 		public function get noteState():Number
 		{
@@ -40,6 +44,8 @@ package logics
 		
 		public function addMiss(hy : int) : void
 		{
+			++m_noteTot;
+			UIMgr.getInstance().resetHitMiss(m_noteHit, m_noteTot);
 			UIMgr.getInstance().addMissTxt(hy);			
 		}
 		
@@ -57,6 +63,9 @@ package logics
 			var tmp : int = SceneMgr.getInstance().currentNoteId;
 			if (tmp == m_lastNoteId + 1)
 			{
+				++m_noteHit;
+				++m_noteTot;
+				UIMgr.getInstance().resetHitMiss(m_noteHit, m_noteTot);
 				m_streak += 1;
 				m_lastNoteId = tmp;
 				if (m_streak >= 5)
