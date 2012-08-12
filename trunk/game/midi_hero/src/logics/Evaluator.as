@@ -44,7 +44,11 @@ package logics
 			if (tmp >= 95) tmp = 100;
 			m_score += tmp;
 			
-			UIMgr.getInstance().addCoverageTxt(SceneMgr.getInstance().getCurrentNoteColor(), hy, tmp);
+			if (tmp >= 70)
+			{
+			
+				UIMgr.getInstance().addCoverageTxt(SceneMgr.getInstance().getCurrentNoteColor(), hy, tmp);
+			}
 			var tmp : int = SceneMgr.getInstance().currentNoteId;
 			if (tmp == m_lastNoteId + 1)
 			{
