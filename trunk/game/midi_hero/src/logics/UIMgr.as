@@ -28,6 +28,7 @@ package logics
 		
 		private var m_cStreakTxt : FlxText;
 		private var m_lStreakTxt : FlxText;
+		private var m_hitMiss : FlxText;
 		private var m_stkLColor : uint;
 		private var m_stkCColor : uint;
 		private var m_stkStep : uint;
@@ -36,6 +37,11 @@ package logics
 		
 		private static var m_instance : UIMgr = null;
 		
+		public function resetHitMiss(hit : int, tot : int) : void
+		{
+			m_hitMiss.text = "Hit: " + hit.toString() + "/" + tot.toString();
+			
+		}
 
 		public static function getInstance() : UIMgr
 		{
@@ -72,7 +78,7 @@ package logics
 		{
 			m_missText.y = hy - 20;
 			m_missText.alpha = 1.0;
-			m_missText.x = GameLogic.screenWidth / 2;
+			m_missText.x = GameLogic.screenWidth / 2 - 40;
 			
 		}
 		
@@ -100,15 +106,21 @@ package logics
 		public function UIMgr(MaxSize:uint=0)
 		{
 			super(MaxSize);
-			m_time = new FlxText(150, 0, 200, "");
+			
+			m_hitMiss = new FlxText(435, 0, 200, "");
+			m_hitMiss.alignment = "right";
+			m_hitMiss.size = 14;
+			add(m_hitMiss);
+			
+			m_time = new FlxText(150, 5, 200, "");
 			//m_fps = new FlxText(300, 0, 200, "");
 			m_time.scale = new FlxPoint(2.5, 2.5);
 			//m_fps.scale = new FlxPoint(3.0, 3.0);
 
-			m_score = new FlxText(350, 0, 200, "");
+			m_score = new FlxText(350, 5, 200, "");
 			m_score.scale = new FlxPoint(2.5, 2.5);
 			
-			m_notePercent = new FlxText(600, 0, 200, "");
+			m_notePercent = new FlxText(600, 5, 200, "");
 			m_notePercent.scale = new FlxPoint(1.0, 1.0);
 			
 			add(m_time);
@@ -131,18 +143,20 @@ package logics
 
 			}
 			
-			m_cStreakTxt = new FlxText(435, 5, 200, "");
+			m_cStreakTxt = new FlxText(435, 20, 200, "");
 			m_cStreakTxt.size = 14;
 			m_cStreakTxt.alignment = "right";
 			add(m_cStreakTxt);
-			m_lStreakTxt = new FlxText(435, 5, 200, "");
+			m_lStreakTxt = new FlxText(435, 20, 200, "");
 			m_lStreakTxt.size = 14;
 			m_lStreakTxt.alignment = "right";
 			add(m_lStreakTxt);
 			
 			m_missText = new FlxText(1000, 100, 200, "Miss");
-			m_missText.size = 14;
+			m_missText.size = 18;
+			
 			add(m_missText);
+			
 		
 			m_stkFlap = false;
 		}

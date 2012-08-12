@@ -2,8 +2,9 @@ package logics
 {
 	import flash.display.BitmapData;
 	import flash.geom.Rectangle;
-	import org.flixel.FlxG;
+	
 	import org.flixel.FlxCamera;
+	import org.flixel.FlxG;
 	import org.flixel.FlxSprite;
 
 	public class Note
@@ -17,6 +18,7 @@ package logics
 		private var m_needUpdate : Boolean;
 		public  var x : Number;
 		public	var y : Number;
+
 		
 		public function Note()
 		{
@@ -64,7 +66,7 @@ package logics
 		
 		public function changeNote(color : uint, height : int) : void
 		{
-			
+
 			m_color = color;
 			m_height = height;
 			m_needUpdate = true;			

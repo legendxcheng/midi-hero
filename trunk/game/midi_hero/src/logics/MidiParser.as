@@ -113,7 +113,12 @@ package logics
 				}
 				var noteName : String = m_json[i].octave.toString() + m_json[i].pitch;
 				ni.push({start: m_json[i].start , end : m_json[i].end, notePos : tmp * 2, 
-					high : (m_json[i].octave - 3) * 12 + calcHigh(m_json[i].pitch) + 20, name : noteName});
+					high : (m_json[i].octave - 3) * 12 + calcHigh(m_json[i].pitch) + 20, name : noteName,
+					hit : 0});
+				/* hit  0 not need play
+				 		1 played
+						2 missed
+				*/
 			}
 			
 			sm.setNoteInfo(ni);

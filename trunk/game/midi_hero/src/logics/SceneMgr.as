@@ -26,6 +26,7 @@ package logics
 		private var m_currentNoteId : int;
 		private var m_currentNoteX : int;
 		private var m_currentNoteColor : uint;
+		private var m_currentNoteHeight : int;
 		private var m_notes : Notes;
 		
 		public function getCurrentNoteColor() : uint
@@ -86,6 +87,7 @@ package logics
 			*/
 			var sndMgr : SoundMgr = SoundMgr.getInstance();
 			sndMgr.changeNote(m_noteInfo[m_currentNoteId].name, 20.0);
+			noteInfo[m_currentNoteId].hit = 1;
 				//m_noteInfo[m_currentNoteId].end - m_noteInfo[m_currentNoteId].start);
 			
 		}
@@ -300,13 +302,35 @@ package logics
 				var tox : int = m_noteSprite[si].x;
 				m_noteSprite[si].x = Math.round(GameLogic.screenWidth + (m_noteInfo[ii].start - timeElap) / timeScale);
 				
-				if (m_noteSprite[si].x <= m_soundPlayX && m_noteSprite[si].x + m_noteSprite[si].width >= m_soundPlayX)
+				if ( m_noteSprite[si].x + m_noteSprite[si].width >= m_soundPlayX)
 				{
-					m_soundPlayFloor = GameLogic.screenHeight - 50 - 4 - m_noteSprite[si].height;
-					m_currentNoteColor = m_noteSprite[si].color;
-					m_currentNoteId = ii;
-					m_currentNoteX = m_noteSprite[si].x;
+					if (m_noteSprite[si].x <= m_soundPlayX)
+					{
+						m_soundPlayFloor = GameLogic.screenHeight - 50 - 4 - m_noteSprite[si].height;
+						m_currentNoteColor = m_noteSprite[si].color;
+						m_currentNoteId = ii;
+						m_currentNoteX = m_noteSprite[si].x;
+						m_currentNoteHeight = m_soundPlayFloor;
+					}
+					
+					
 				}
+				
+				else if (m_noteSprite[si].x + m_noteSprite[si].width < m_soundPlayX)
+				{
+					switch (m_noteInfo[ii].hit)
+					{
+						case 0:
+							m_noteInfo[ii].hit = 2;
+							Evaluator.getInstance().addMiss(m_currentNoteHeight);
+							break;
+						case 1:
+							break;
+						case 2:
+							break;
+					}
+				}
+				
 				
 
 				
