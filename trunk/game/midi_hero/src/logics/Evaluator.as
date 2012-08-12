@@ -38,16 +38,21 @@ package logics
 			return m_instance;
 		}
 		
+		public function addMiss(hy : int) : void
+		{
+			UIMgr.getInstance().addMissTxt(hy);			
+		}
+		
 		public function addCoverage(right : int, left : int, noteId : int, hy : int) : void
 		{
 			var tmp : int = Math.ceil(((right - left) * 100 / SceneMgr.getInstance().getCurrentNoteLength() ));
 			if (tmp >= 95) tmp = 100;
 			m_score += tmp;
-			
+			var tc : uint  = SceneMgr.getInstance().getCurrentNoteColor();
 			if (tmp >= 70)
 			{
 			
-				UIMgr.getInstance().addCoverageTxt(SceneMgr.getInstance().getCurrentNoteColor(), hy, tmp);
+				UIMgr.getInstance().addCoverageTxt(tc, hy, tmp);
 			}
 			var tmp : int = SceneMgr.getInstance().currentNoteId;
 			if (tmp == m_lastNoteId + 1)
@@ -56,7 +61,7 @@ package logics
 				m_lastNoteId = tmp;
 				if (m_streak >= 5)
 				{
-					UIMgr.getInstance().addStreakTxt(hy, m_streak);
+					UIMgr.getInstance().addStreakTxt(tc, hy, m_streak);
 					m_score += 100 * m_streak; 
 				}
 			}
