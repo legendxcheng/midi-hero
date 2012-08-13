@@ -45,27 +45,29 @@ package logics
 		public function addMiss(hy : int) : void
 		{
 			++m_noteTot;
-			UIMgr.getInstance().resetHitMiss(m_noteHit, m_noteTot);
+			UIMgr.getInstance().resetHitMiss(false, m_noteHit, m_noteTot);
 			UIMgr.getInstance().addMissTxt(hy);			
 		}
 		
 		public function addCoverage(right : int, left : int, noteId : int, hy : int) : void
 		{
 			var tmp : int = Math.ceil(((right - left) * 100 / SceneMgr.getInstance().getCurrentNoteLength() ));
+			var stx : int = 
+				Math.ceil(((left - SceneMgr.getInstance().currentNoteX) * 100 / SceneMgr.getInstance().getCurrentNoteLength()));
 			if (tmp >= 95) tmp = 100;
 			m_score += tmp;
 			var tc : uint  = SceneMgr.getInstance().getCurrentNoteColor();
-			if (tmp >= 70)
+			if (tmp >= 30)
 			{
 			
-				UIMgr.getInstance().addCoverageTxt(tc, hy, tmp);
+				UIMgr.getInstance().addCoverageTxt(tc, hy, stx, tmp);
 			}
 			var tmp : int = SceneMgr.getInstance().currentNoteId;
 			if (tmp == m_lastNoteId + 1)
 			{
 				++m_noteHit;
 				++m_noteTot;
-				UIMgr.getInstance().resetHitMiss(m_noteHit, m_noteTot);
+				UIMgr.getInstance().resetHitMiss(true, m_noteHit, m_noteTot);
 				m_streak += 1;
 				m_lastNoteId = tmp;
 				if (m_streak >= 5)
@@ -83,9 +85,25 @@ package logics
 		
 		public function setNoteState(cover : int) : void
 		{
-			m_noteState = cover / SceneMgr.getInstance().getCurrentNoteLength();
+			var kk : Number = cover / SceneMgr.getInstance().getCurrentNoteLength();
+			if (m_noteState < kk)
+			{
+				var tmp : Number = Math.floor((GameLogic.screenWidth / 2 - SceneMgr.getInstance().currentNoteX) * 100
+					/ SceneMgr.getInstance().getCurrentNoteLength());
+				UIMgr.getInstance().updateNoteHitStateArea(tmp);
+			}
+			else
+			{
+				var rpct : Number = Math.floor((GameLogic.screenWidth / 2 - SceneMgr.getInstance().currentNoteX) * 100
+					/ SceneMgr.getInstance().getCurrentNoteLength());
+				var lpct : Number = Math.floor((GameLogic.screenWidth / 2 - SceneMgr.getInstance().currentNoteX - cover) * 100
+					/ SceneMgr.getInstance().getCurrentNoteLength());
+				UIMgr.getInstance().addNoteHitStateArea(lpct, rpct);
+			}
+			m_noteState = kk;
 			if (m_noteState > 0.95)
 				m_noteState = 1.00;
+			
 		}
 		
 		public function sendCoverage() : void // call by Hero calss

@@ -8,7 +8,10 @@ package logics
 	import org.flixel.FlxG;
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxPoint;
+	import org.flixel.FlxSprite;
 	import org.flixel.FlxText;
+	
+	import sprites.NoteHitState;
 	
 	//[Embed(source = 'F:\\MidiHero\\midi-hero\\trunk\\game\\midi_hero\\Adore64.ttf', fontName = "Adore64")]
 	public class UIMgr extends FlxGroup
@@ -23,24 +26,35 @@ package logics
 		private var m_missText : FlxText;
 		private var m_cStart : int;
 		private var m_cEnd : int;
-		private var m_coverageTxt : Array;
 		private var m_cNum : int;
 		
 		private var m_cStreakTxt : FlxText;
 		private var m_lStreakTxt : FlxText;
+		
 		private var m_hitMiss : FlxText;
+		private var m_hitMissFx : FlxText;
+		private var m_hmFxShowing : Boolean;
+		
+		
 		private var m_stkLColor : uint;
 		private var m_stkCColor : uint;
 		private var m_stkStep : uint;
 		private var m_stkFlap : Boolean;
-
+	
+		private var m_coverageTxt : Array;
+		private var m_noteHitState : NoteHitState;
 		
 		private static var m_instance : UIMgr = null;
 		
-		public function resetHitMiss(hit : int, tot : int) : void
+		public function resetHitMiss(isHit : Boolean, hit : int, tot : int) : void
 		{
-			m_hitMiss.text = "Hit: " + hit.toString() + "/" + tot.toString();
 			
+			m_hitMissFx.text = m_hitMiss.text = "Hit: " + hit.toString() + "/" + tot.toString();
+			if (isHit)
+				m_hitMissFx.color = 0x71e62e; // set green
+			else 
+				m_hitMissFx.color = 0xff0000;
+			m_hmFxShowing = true;
 		}
 
 		public static function getInstance() : UIMgr
@@ -56,7 +70,7 @@ package logics
 			return 12 + 0.08 * pct;
 		}
 		
-		public function addCoverageTxt(co : Number, hy : Number, pct : Number) : void
+		public function addCoverageTxt(co : Number, hy : Number, stx : Number, pct : Number) : void
 		{
 			++m_cNum;
 			++m_cEnd;
@@ -69,6 +83,8 @@ package logics
 			ft.alpha = 1.0;
 			ft.size = getCoverageSize(pct);
 			ft.color = co;
+			
+			
 
 			add(ft);
 			
@@ -91,36 +107,61 @@ package logics
 				//m_cStreakTxt.text = "+" + (stk * 100).toString() + "% Streak " + stk.toString() + " !";		
 				m_cStreakTxt.color = tc;
 				m_cStreakTxt.alpha = 0;
+				m_lStreakTxt.alpha = 1.0;
 			}
 			else
 			{
 						
 				m_lStreakTxt.color = tc;
 				m_lStreakTxt.alpha = 0;
+				m_cStreakTxt.alpha = 1.0;
 			}
 			
 			
 			
 		}
 		
+		public function resetNoteHitState(co : Number) : void
+		{
+			m_noteHitState.newNote(co);
+		}
+		
+		public function updateNoteHitStateArea(rpct : Number) : void
+		{
+			m_noteHitState.updateHitArea(rpct);
+		}
+		public function addNoteHitStateArea(lpct : Number, rpct : Number) : void
+		{
+			m_noteHitState.addHitArea(lpct, rpct);
+		}
+		
+		
+		
 		public function UIMgr(MaxSize:uint=0)
 		{
 			super(MaxSize);
+			
+			
 			
 			m_hitMiss = new FlxText(435, 0, 200, "");
 			m_hitMiss.alignment = "right";
 			m_hitMiss.size = 14;
 			add(m_hitMiss);
+			m_hitMissFx = new FlxText(435, 0, 200, "");
+			m_hitMissFx.alignment = "right";
+			m_hitMissFx.size = 14;
+			m_hitMissFx.alpha = 0;
+			add(m_hitMissFx);
 			
 			m_time = new FlxText(150, 5, 200, "");
 			//m_fps = new FlxText(300, 0, 200, "");
 			m_time.scale = new FlxPoint(2.5, 2.5);
 			//m_fps.scale = new FlxPoint(3.0, 3.0);
 
-			m_score = new FlxText(350, 5, 200, "");
+			m_score = new FlxText(320, 5, 200, "");
 			m_score.scale = new FlxPoint(2.5, 2.5);
 			
-			m_notePercent = new FlxText(600, 5, 200, "");
+			m_notePercent = new FlxText(600, 80, 200, "");
 			m_notePercent.scale = new FlxPoint(1.0, 1.0);
 			
 			add(m_time);
@@ -159,6 +200,12 @@ package logics
 			
 		
 			m_stkFlap = false;
+			
+			m_noteHitState = new NoteHitState();
+			m_noteHitState.x = 370;
+			m_noteHitState.y = 10;
+			add(m_noteHitState);
+			
 		}
 		
 		override public function preUpdate() : void
@@ -184,17 +231,41 @@ package logics
 				m_missText.x -= FlxG.elapsed / GameLogic.getInstance().timeScale;
 				m_missText.y *= 0.99;
 			}
+			if (m_hmFxShowing)
+			{
+				m_hitMissFx.alpha += 0.05;
+				if (m_hitMissFx.alpha >= 1)
+				{
+					m_hmFxShowing = false;
+				}
+			}
+			else if (m_hitMissFx.alpha > 0)
+			{
+				m_hitMissFx.alpha -= 0.02;	
+			}
+			
+			
 			
 			// color transform of streakText
 			if (m_stkFlap)
 			{
-				m_cStreakTxt.alpha += 0.05;
-				m_lStreakTxt.alpha -= 0.05;
+				m_cStreakTxt.alpha += 0.02;
+				m_lStreakTxt.alpha -= 0.02;
+				if (m_lStreakTxt.alpha == 0)
+				{
+					m_lStreakTxt.text = "";
+					m_stkFlap = !m_stkFlap;
+				}
 			}
 			else
 			{
-				m_cStreakTxt.alpha -= 0.05;
-				m_lStreakTxt.alpha += 0.05;
+				m_cStreakTxt.alpha -= 0.01;
+				m_lStreakTxt.alpha += 0.01;
+				if (m_cStreakTxt.alpha == 0)
+				{
+					m_cStreakTxt.text = "";
+					m_stkFlap = !m_stkFlap;
+				}
 			}
 
 			
