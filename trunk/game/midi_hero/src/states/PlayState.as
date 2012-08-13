@@ -21,6 +21,7 @@ package states
 		
 		override public function create():void
 		{
+			FlxG.bgColor = 0xFF272822;
 			add(SceneMgr.getInstance());
 			
 			m_gameLogic = GameLogic.getInstance();

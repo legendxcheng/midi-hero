@@ -29,6 +29,11 @@ package logics
 		private var m_currentNoteHeight : int;
 		private var m_notes : Notes;
 		
+		public function get currentNoteX():int
+		{
+			return m_currentNoteX;
+		}
+
 		public function getCurrentNoteColor() : uint
 		{
 			return m_currentNoteColor;
@@ -79,7 +84,7 @@ package logics
 			return 0;
 		}
 		
-		public function playSound() : void
+		public function heroHitNote() : void
 		{
 			
 			/*
@@ -90,6 +95,8 @@ package logics
 			noteInfo[m_currentNoteId].hit = 1;
 				//m_noteInfo[m_currentNoteId].end - m_noteInfo[m_currentNoteId].start);
 			
+			// set note rect fx
+			notes.addRectFx(m_currentNoteId);
 		}
 		
 		public function stopSound() : void
@@ -308,6 +315,10 @@ package logics
 					{
 						m_soundPlayFloor = GameLogic.screenHeight - 50 - 4 - m_noteSprite[si].height;
 						m_currentNoteColor = m_noteSprite[si].color;
+						if (m_currentNoteId < ii)
+						{
+							UIMgr.getInstance().resetNoteHitState(m_currentNoteColor);
+						}
 						m_currentNoteId = ii;
 						m_currentNoteX = m_noteSprite[si].x;
 						m_currentNoteHeight = m_soundPlayFloor;

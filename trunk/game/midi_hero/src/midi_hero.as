@@ -13,7 +13,7 @@ package
 		{	
 			
 			super(640, 480, PlayState, 1); //Create a new FlxGame object at 320x240 with 2x pixels, then load PlayState
-		
+			FlxG.bgColor = 0x272822;
 		}
 		
 		
