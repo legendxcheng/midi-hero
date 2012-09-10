@@ -73,7 +73,8 @@ package logics
 				if (m_streak >= 5)
 				{
 					UIMgr.getInstance().addStreakTxt(tc, hy, m_streak);
-					m_score += 100 * m_streak; 
+					m_score += m_streak; 
+					
 				}
 			}
 			else if (tmp > m_lastNoteId + 1)
@@ -81,6 +82,8 @@ package logics
 				m_streak = 1;
 				m_lastNoteId = tmp;
 			}
+			
+			SceneMgr.getInstance().setFXNum(m_streak / 2); 
 		}
 		
 		public function setNoteState(cover : int) : void

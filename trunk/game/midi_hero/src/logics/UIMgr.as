@@ -13,7 +13,7 @@ package logics
 	
 	import sprites.NoteHitState;
 	
-	//[Embed(source = 'F:\\MidiHero\\midi-hero\\trunk\\game\\midi_hero\\Adore64.ttf', fontName = "Adore64")]
+	
 	public class UIMgr extends FlxGroup
 	{
 		private var m_time : FlxText;
@@ -100,7 +100,7 @@ package logics
 		
 		public function addStreakTxt(tc : uint, hy: int, stk : int) : void
 		{
-			m_cStreakTxt.text = m_lStreakTxt.text = "+" + (stk * 100).toString() + "% Streak " + stk.toString() + " !";
+			m_cStreakTxt.text = m_lStreakTxt.text = "+" + (stk).toString() + "% Streak " + stk.toString() + " !";
 			m_stkFlap = !m_stkFlap;
 			if (m_stkFlap)
 			{
@@ -146,11 +146,13 @@ package logics
 			m_hitMiss = new FlxText(435, 0, 200, "");
 			m_hitMiss.alignment = "right";
 			m_hitMiss.size = 14;
+			m_hitMiss.text = "Hit: 0/0";
 			add(m_hitMiss);
 			m_hitMissFx = new FlxText(435, 0, 200, "");
 			m_hitMissFx.alignment = "right";
 			m_hitMissFx.size = 14;
 			m_hitMissFx.alpha = 0;
+			m_hitMissFx.text = "Hit: 0/0";
 			add(m_hitMissFx);
 			
 			m_time = new FlxText(150, 5, 200, "");

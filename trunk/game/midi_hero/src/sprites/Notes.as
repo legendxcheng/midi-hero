@@ -12,6 +12,7 @@ package sprites
 	
 	public class Notes extends FlxSprite
 	{
+		
 		private var m_rectFx : Array;
 		
 		public function Notes(X:Number=0, Y:Number=0, SimpleGraphic:Class=null)
