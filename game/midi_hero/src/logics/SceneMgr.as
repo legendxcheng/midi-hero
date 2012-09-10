@@ -7,6 +7,7 @@ package logics
 	import org.flixel.FlxSprite;
 	
 	import sprites.Hero;
+	import sprites.HeroFX;
 	import sprites.Notes;
 	
 
@@ -28,6 +29,21 @@ package logics
 		private var m_currentNoteColor : uint;
 		private var m_currentNoteHeight : int;
 		private var m_notes : Notes;
+		
+		private var m_heroY : Array;
+		private var m_heroFx : Array;
+		private var m_hfxI : int;
+		private var m_hfxNum : int;
+		
+		public function setFXNum(fxn : int) : void
+		{
+			for (var i : int = 0; i < m_heroFx.length; ++i)
+				m_heroFx[i].visible = false;
+			m_hfxNum = fxn;
+			if (m_hfxNum > 10)
+				m_hfxNum = 10;
+			
+		}
 		
 		public function get currentNoteX():int
 		{
@@ -147,6 +163,22 @@ package logics
 			m_notes = new Notes();
 			add(m_notes);
 			
+			m_heroY = new Array();
+			m_heroFx = new Array();
+			for (var i :  int = 0; i < 60; ++i)
+			{
+				m_heroY.push(0);
+			}
+			for (var i: int = 0; i < 10; ++i)
+			{
+				var tmp:HeroFX = new HeroFX();
+				add(tmp);
+				tmp.visible = false;
+				m_heroFx.push(tmp);
+			}
+			m_hfxI = 0;
+			m_hfxNum = 0;
+			
 		}
 		
 		/*
@@ -235,6 +267,14 @@ package logics
 			return k - 1;
 		}
 		
+		public function addHeroY(yy : int) : void
+		{
+			
+			m_heroY[m_hfxI] = yy;
+			m_hfxI += 1;
+			if (m_hfxI == m_heroY.length)
+				m_hfxI = 0;	
+		}
 		
 		
 		override public function preUpdate() : void
@@ -343,7 +383,22 @@ package logics
 				}
 				
 				
-
+				// draw fx
+				if (m_hfxNum > 0)
+				{
+					
+					for (var i : int = 1; i <= m_hfxNum; ++i)
+					{
+						var k : int = (m_hfxI - i * (i + 1) / 2) % 60;
+						if (k < 0)
+							k += 60;
+						var thfx : HeroFX = m_heroFx[i - 1];
+						thfx.visible = true;
+						thfx.alpha = 1 - 1 / m_hfxNum * i;
+						thfx.y = m_heroY[k];
+						thfx.x = GameLogic.screenWidth / 2 - i / 60 /  GameLogic.getInstance().timeScale;
+					}
+				}
 				
 				// now draw each note on m_notes
 				
@@ -355,6 +410,7 @@ package logics
 				if (flag)
 					break;
 			}
+			
 			
 		}
 		

@@ -13,6 +13,8 @@ package sprites
 	
 	public class Hero extends FlxSprite
 	{
+		private var c_GJumping : Number;
+		private var c_GFalling : Number;
 		private var c_upForce : int;
 		private var m_G : Number;
 		private var m_xSpd : int;
@@ -46,6 +48,8 @@ package sprites
 			_pixels = new BitmapData(4, 4, true, m_color);
 			resetHelpers();
 			
+			c_GJumping = 0.8;
+			c_GFalling = 1.6;
 			m_xSpd = Math.round(1 / GameLogic.getInstance().timeScale);
 			m_G = 0.8;
 			m_ySpd = 0;
@@ -72,6 +76,7 @@ package sprites
 
 		override public function preUpdate():void
 		{
+			SceneMgr.getInstance().addHeroY(y);
 			m_lastOnNote = m_onNote;
 			if (!m_begin)
 			{
@@ -92,7 +97,7 @@ package sprites
 			else 
 				m_ySpd = 0;
 			
-			if (FlxG.mouse.pressed())
+			if (FlxG.keys.J)
 			{
 				if (m_isJumping)
 				{
@@ -122,13 +127,15 @@ package sprites
 						m_ySpd = 0;
 					}
 					m_isJumping = true;
+					m_G = c_GJumping;
 				}
 			}
 				
 				
-			else if (!FlxG.mouse.pressed() && m_isJumping)
+			else if (!FlxG.keys.J && m_isJumping)
 			{
 				m_isJumping = false;
+				m_G = c_GFalling;
 			}
 			
 			
@@ -203,6 +210,8 @@ package sprites
 			{
 				m_noteBeginX = SceneMgr.getInstance().getCurrentNoteX();
 			}
+			
+			SceneMgr.getInstance().addHeroY(this.y);
 
 
 		}

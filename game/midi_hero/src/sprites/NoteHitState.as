@@ -23,7 +23,7 @@ package sprites
 			frames = 1;
 			
 			frame = 0;
-			m_color = 0x00000000;
+			m_color = 0x272822;
 			_pixels = new BitmapData(100, 20, true, 0x272822);
 			 
 			resetHelpers();
@@ -61,8 +61,11 @@ package sprites
 		{
 			_pixels.lock();
 			var rectb : Rectangle = new Rectangle(0, 0, m_width, m_height);
-			
-			_pixels.fillRect(rectb, SceneMgr.getInstance().getCurrentNoteColor() + 0xAA000000);
+			var ddd : Number = SceneMgr.getInstance().getCurrentNoteColor();
+			if (ddd == 0)
+				_pixels.fillRect(rectb, m_color);
+			else
+				_pixels.fillRect(rectb, SceneMgr.getInstance().getCurrentNoteColor() + 0xAA000000);
 			
 			for (var i : int = 0; i < m_hitInfo.length; ++i)
 			{
