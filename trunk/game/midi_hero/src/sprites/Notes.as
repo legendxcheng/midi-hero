@@ -13,7 +13,7 @@ package sprites
 	public class Notes extends FlxSprite
 	{
 		
-		private var m_rectFx : Array;
+
 		
 		public function Notes(X:Number=0, Y:Number=0, SimpleGraphic:Class=null)
 		{
@@ -25,19 +25,12 @@ package sprites
 			_pixels = new BitmapData(GameLogic.screenWidth, GameLogic.screenHeight, true, 0x272822);
 			resetHelpers();
 			
-			m_rectFx = new Array();
+			//m_rectFx = new Array();
 			
 			this.active = true;
 
 		}
-		public function addRectFx(noteId : int) : void
-		{
-			var tmp = new Object();
-			tmp.alp = 0;
-			tmp.nid = noteId;
-			tmp.pct = 0;
-			m_rectFx.push(tmp);
-		}
+
 			
 		public function resetNotes() : void
 		{
@@ -100,51 +93,22 @@ package sprites
 				switch (sm.noteInfo[ii].hit)
 				{
 					case 0:
-						a_color += 0x99000000;
+						a_color = 0x55FFFFFF;
+						//a_color += 0x66000000;
 						break;
 					case 1:
 						a_color += 0xFF000000;
 						break;
 					case 2:
-						a_color += 0x44000000;
+						a_color = 0x11FFFFFF;
+						//a_color += 0x11000000;
 						break;
 				}
 				
 				
 				_pixels.fillRect(trect, a_color);
-				/*
-				if (fxi < m_rectFx.length && ii == m_rectFx[fxi].nid) // showing fx
-				{
-					var hStep : Number;
-					
-					var tkk : Number = 0xFF * m_rectFx[fxi].alp;
-					var ttrect = new Rectangle(trect.x+ trect.width / 2, trect.y + trect.height / 2, 0,  0);
-					
-					if (m_rectFx[fxi].pct < 1)
-					{
-						ttrect.inflate(m_rectFx[fxi].pct * trect.width / 2, m_rectFx[fxi].pct * trect.height / 2);
-						m_rectFx[fxi].pct += 0.10;
-						m_rectFx[fxi].alp += 0.10;
-					}
-					else
-					{
-						ttrect.inflate(m_rectFx[fxi].pct * trect.width  / 2, m_rectFx[fxi].pct * trect.height / 2);
-						m_rectFx[fxi].pct += 0.001;
-						m_rectFx[fxi].alp -= 0.001;
-					}
-					
+				
 
-					//_pixels.fillRect(ttrect, t_color  + tkk << 24);
-					_pixels.fillRect(ttrect, tkk << 24 + 0xFFFFFF);
-					
-					
-					if (m_rectFx[fxi].alp <= 0)
-					{
-						m_rectFx.splice(fxi, 1);		
-					}
-					++fxi;
-				}
-				*/
 				
 				// loop end
 				si = sm.nextIndex(si);

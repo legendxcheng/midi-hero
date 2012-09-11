@@ -111,8 +111,7 @@ package logics
 			noteInfo[m_currentNoteId].hit = 1;
 				//m_noteInfo[m_currentNoteId].end - m_noteInfo[m_currentNoteId].start);
 			
-			// set note rect fx
-			notes.addRectFx(m_currentNoteId);
+			
 		}
 		
 		public function stopSound() : void

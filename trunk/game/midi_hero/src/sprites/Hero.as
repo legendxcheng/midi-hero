@@ -154,7 +154,7 @@ package sprites
 			
 			if (y > SceneMgr.getInstance().soundPlayFloor)
 			{
-				if (y - SceneMgr.getInstance().soundPlayFloor >= 10)
+				if (y - SceneMgr.getInstance().soundPlayFloor >= 15)
 				{
 					m_noteMiss = true;
 					//Evaluator.getInstance().addMiss(SceneMgr.getInstance().soundPlayFloor);
