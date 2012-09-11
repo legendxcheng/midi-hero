@@ -69,6 +69,12 @@ package sprites
 			
 		}
 		
+		public function changeColor(cc : Number) : void
+		{
+			_pixels = new BitmapData(4, 4, true, cc);
+			resetHelpers();
+		}
+		
 		public static function get maxYSpd():Number
 		{
 			return m_maxYSpd;
@@ -173,7 +179,10 @@ package sprites
 					
 					
 					if (!m_noteMiss)
+					{
+						//changeColor(SceneMgr.getInstance().getCurrentNoteColor());
 						SceneMgr.getInstance().heroHitNote();
+					}
 					m_onNote = true;
 					
 				}

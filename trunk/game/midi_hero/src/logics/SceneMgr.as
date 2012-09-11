@@ -108,8 +108,20 @@ package logics
 			*/
 			var sndMgr : SoundMgr = SoundMgr.getInstance();
 			sndMgr.changeNote(m_noteInfo[m_currentNoteId].name, 20.0);
-			noteInfo[m_currentNoteId].hit = 1;
+			if (noteInfo[m_currentNoteId].hit < 1)
+				noteInfo[m_currentNoteId].hit = 1;
 				//m_noteInfo[m_currentNoteId].end - m_noteInfo[m_currentNoteId].start);
+			
+			if (m_hfxNum > 1)
+			{
+				for (var i : int = m_hfxNum - 1; i > 0; --i)
+				{
+					var hfxl : HeroFX = m_heroFx[i];
+					var hfxf : HeroFX = m_heroFx[i - 1];
+					hfxl.changeColor(hfxf.m_color);
+				}
+			}
+			m_heroFx[0].changeColor(SceneMgr.getInstance().getCurrentNoteColor());
 			
 			
 		}
@@ -386,7 +398,7 @@ package logics
 				}
 				
 				
-				// draw fx
+				// draw hero fx
 				if (m_hfxNum > 0)
 				{
 					
