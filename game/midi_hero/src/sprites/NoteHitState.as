@@ -65,7 +65,8 @@ package sprites
 			if (ddd == 0)
 				_pixels.fillRect(rectb, m_color);
 			else
-				_pixels.fillRect(rectb, SceneMgr.getInstance().getCurrentNoteColor() + 0xAA000000);
+				_pixels.fillRect(rectb, SceneMgr.getInstance().getCurrentNoteColor() + 0x66000000);
+				//_pixels.fillRect(rectb, 0x44FFFFFF);
 			
 			for (var i : int = 0; i < m_hitInfo.length; ++i)
 			{
