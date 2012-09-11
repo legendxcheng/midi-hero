@@ -112,6 +112,7 @@ package logics
 				noteInfo[m_currentNoteId].hit = 1;
 				//m_noteInfo[m_currentNoteId].end - m_noteInfo[m_currentNoteId].start);
 			
+			/*
 			if (m_hfxNum > 1)
 			{
 				for (var i : int = m_hfxNum - 1; i > 0; --i)
@@ -122,7 +123,7 @@ package logics
 				}
 			}
 			m_heroFx[0].changeColor(SceneMgr.getInstance().getCurrentNoteColor());
-			
+			*/
 			
 		}
 		
@@ -160,8 +161,8 @@ package logics
 			resetScore();
 			
 			m_colorList = new Array();
-			m_colorList.push(0xFF8CC540);
-			m_colorList.push(0xFF009F5D);
+			m_colorList.push(0xFFAED637);
+			m_colorList.push(0xFFFFE996);
 			m_colorList.push(0xFF019FA0);
 			m_colorList.push(0xFF019FDE);
 			m_colorList.push(0xFF007CDC);
@@ -180,7 +181,7 @@ package logics
 			m_heroY = new Array();
 			m_heroFx = new Array();
 			
-			for (i = 0; i < 60; ++i)
+			for (i = 0; i < 120; ++i)
 			{
 				m_heroY.push(0);
 			}
@@ -404,9 +405,9 @@ package logics
 					
 					for (var i : int = 1; i <= m_hfxNum; ++i)
 					{
-						var k : int = (m_hfxI - i * (i + 1) / 2) % 60;
+						var k : int = (m_hfxI - i * (i + 1)) % 120;
 						if (k < 0)
-							k += 60;
+							k += 120;
 						var thfx : HeroFX = m_heroFx[i - 1];
 						thfx.visible = true;
 						thfx.alpha = 1 - 1 / m_hfxNum * i;

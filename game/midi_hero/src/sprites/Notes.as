@@ -138,7 +138,7 @@ package sprites
 						//a_color += 0x11000000;
 						break;
 					case 3:
-						a_color += 0xAA000000;
+						a_color += 0xFF000000;
 				}
 				
 				
