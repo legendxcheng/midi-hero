@@ -1,7 +1,7 @@
 package logics
 {
-	import org.flixel.FlxG;
 	import org.flixel.FlxBasic;
+	import org.flixel.FlxG;
 	import org.flixel.FlxTimer;
 	
 	public class GameLogic extends FlxBasic
@@ -10,8 +10,8 @@ package logics
 		private var m_timeElapsed : Number;
 		private var m_timer : FlxTimer;
 		private var m_timeScale : Number;	// how much time coresponds to 1 pixel
-		public static var screenWidth = 640;
-		public static var screenHeight = 480;
+		public static var screenWidth : int = 640;
+		public static var screenHeight : int = 480;
 		
 		public function GameLogic()
 		{
