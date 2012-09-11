@@ -51,7 +51,7 @@ package sprites
 		
 		public function addHitArea(lpct : Number, rpct : Number) : void
 		{
-			var tmp = new Object();
+			var tmp : Object = new Object();
 			tmp.l = lpct;
 			tmp.r = rpct;
 			m_hitInfo.push(tmp);

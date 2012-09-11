@@ -131,7 +131,10 @@ package logics
 			m_soundPlayFloor = GameLogic.screenHeight;
 			m_noteSprite = new Array();
 			// insert 100 notes for future use
-			for (var i: int = 0; i < 100; ++i)
+			
+			var i : int;
+			
+			for (i = 0; i < 100; ++i)
 			{
 				var note : Note = new Note();
 				m_noteSprite.push(note);
@@ -164,11 +167,12 @@ package logics
 			
 			m_heroY = new Array();
 			m_heroFx = new Array();
-			for (var i :  int = 0; i < 60; ++i)
+			
+			for (i = 0; i < 60; ++i)
 			{
 				m_heroY.push(0);
 			}
-			for (var i: int = 0; i < 10; ++i)
+			for (i = 0; i < 10; ++i)
 			{
 				var tmp:HeroFX = new HeroFX();
 				add(tmp);

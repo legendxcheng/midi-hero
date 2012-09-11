@@ -17,8 +17,8 @@ package logics
 		private var m_noteState : Number;
 		private var m_streak : int;
 		private var m_lastNoteId : int;
-		private var m_noteTot;
-		private var m_noteHit;
+		private var m_noteTot : int;
+		private var m_noteHit : int;
 		
 		public function get noteState():Number
 		{
@@ -62,7 +62,7 @@ package logics
 			
 				UIMgr.getInstance().addCoverageTxt(tc, hy, stx, tmp);
 			}
-			var tmp : int = SceneMgr.getInstance().currentNoteId;
+			tmp  = SceneMgr.getInstance().currentNoteId;
 			if (tmp == m_lastNoteId + 1)
 			{
 				++m_noteHit;
@@ -114,7 +114,7 @@ package logics
 			
 		}
 		
-		public function sendNewNote()
+		public function sendNewNote() : void
 		{
 			
 		}
