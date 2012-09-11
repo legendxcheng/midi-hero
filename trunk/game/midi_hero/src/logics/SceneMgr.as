@@ -10,6 +10,8 @@ package logics
 	import sprites.HeroFX;
 	import sprites.Notes;
 	
+	import states.VerdictState;
+	
 
 	// class that controls note sprite
 	public class SceneMgr extends FlxGroup
@@ -29,7 +31,7 @@ package logics
 		private var m_currentNoteColor : uint;
 		private var m_currentNoteHeight : int;
 		private var m_notes : Notes;
-		
+		private var m_timeToEnd : Number;// length of time of current music
 		private var m_heroY : Array;
 		private var m_heroFx : Array;
 		private var m_hfxI : int;
@@ -163,8 +165,8 @@ package logics
 			m_colorList = new Array();
 			m_colorList.push(0xFFAED637);
 			m_colorList.push(0xFFFFE996);
-			m_colorList.push(0xFF019FA0);
-			m_colorList.push(0xFF019FDE);
+			m_colorList.push(0xFF2456AB);
+			m_colorList.push(0xFF3cb4e4);
 			m_colorList.push(0xFF007CDC);
 			m_colorList.push(0xFF887DDD);
 			m_colorList.push(0xFFCD7BDD);
@@ -295,6 +297,12 @@ package logics
 		
 		override public function preUpdate() : void
 		{
+			if (m_timeToEnd < GameLogic.getInstance().getTime())
+			{
+				// change to evaluation state
+				FlxG.switchState(new VerdictState());
+			}
+			
 			if (!m_isPlaying)
 				return;
 			
@@ -444,6 +452,7 @@ package logics
 		
 		public function setNoteInfo(ni : Array) : void
 		{
+			m_timeToEnd = ni[ni.length - 1].end + 3;
 			m_noteInfo = ni;
 			startScore();
 		}
