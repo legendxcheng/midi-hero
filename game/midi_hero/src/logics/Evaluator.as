@@ -9,6 +9,7 @@ package logics
 			m_noteHit = 0;
 			m_score = 0;
 			m_streak = 0;
+			m_maxStreak = 0;
 		}
 		
 		private static var m_instance : Evaluator = null;
@@ -16,10 +17,52 @@ package logics
 		private var m_noteEval : Array;
 		private var m_noteState : Number;
 		private var m_streak : int;
+		private var m_maxStreak : int;
 		private var m_lastNoteId : int;
 		private var m_noteTot : int;
 		private var m_noteHit : int;
+		private var m_time : Number;
 		
+		public function getResult() : Number
+		{
+			return m_score / (m_noteTot * 100 + m_noteTot * (m_noteTot + 1) / 2);	
+		}
+		
+		public function get noteHit():int
+		{
+			return m_noteHit;
+		}
+
+		public function set noteHit(value:int):void
+		{
+			m_noteHit = value;
+		}
+
+		public function get noteTot():int
+		{
+			return m_noteTot;
+		}
+
+		public function set noteTot(value:int):void
+		{
+			m_noteTot = value;
+		}
+
+		public function get maxStreak():int
+		{
+			return m_maxStreak;
+		}
+
+		public function get time():Number
+		{
+			return m_time;
+		}
+
+		public function set time(value:Number):void
+		{
+			m_time = value;
+		}
+
 		public function get noteState():Number
 		{
 			return m_noteState;
@@ -84,6 +127,8 @@ package logics
 			}
 			
 			SceneMgr.getInstance().setFXNum(m_streak / 2); 
+			if (m_streak > m_maxStreak)
+				m_maxStreak = m_streak;
 		}
 		
 		public function setNoteState(cover : int) : void
