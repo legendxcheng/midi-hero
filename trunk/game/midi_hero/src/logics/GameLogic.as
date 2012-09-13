@@ -12,14 +12,27 @@ package logics
 		private var m_timeScale : Number;	// how much time coresponds to 1 pixel
 		public static var screenWidth : int = 640;
 		public static var screenHeight : int = 480;
+		public static var finalFlorrHeight : int = 350;
+		private var m_musicEnd :Boolean;
 		
 		public function GameLogic()
 		{
 			//m_timer = new FlxTimer();
 			m_timeElapsed = 0;
 			m_timeScale = 0.0075;
+			m_musicEnd = false;
 		}
 				
+		public function get musicEnd():Boolean
+		{
+			return m_musicEnd;
+		}
+
+		public function set musicEnd(value:Boolean):void
+		{
+			m_musicEnd = value;
+		}
+
 		public function get timeScale():Number
 		{
 			return m_timeScale;
