@@ -19,7 +19,7 @@ package logics
 			m_sound = new Sound();
 			m_sound.addEventListener( SampleDataEvent.SAMPLE_DATA, onSampleData );
 			m_restLength = 10;
-			m_amplitude = 1.0;
+			m_amplitude = 0.01;
 			m_soundTransform = new SoundTransform();
 			
 		}
