@@ -14,6 +14,7 @@ package logics
 		public static var screenHeight : int = 480;
 		public static var finalFlorrHeight : int = 350;
 		private var m_musicEnd :Boolean;
+		private var m_canGoToVerdictState : Boolean;
 		
 		public function GameLogic()
 		{
@@ -21,8 +22,19 @@ package logics
 			m_timeElapsed = 0;
 			m_timeScale = 0.0075;
 			m_musicEnd = false;
+			m_canGoToVerdictState = false;
 		}
 				
+		public function get canGoToVerdictState():Boolean
+		{
+			return m_canGoToVerdictState;
+		}
+
+		public function set canGoToVerdictState(value:Boolean):void
+		{
+			m_canGoToVerdictState = value;
+		}
+
 		public function get musicEnd():Boolean
 		{
 			return m_musicEnd;
