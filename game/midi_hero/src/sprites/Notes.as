@@ -118,6 +118,7 @@ package sprites
 						m_finalRectLeft = 0;
 						GameLogic.getInstance().canGoToVerdictState = true;
 						FlxG.switchState(new VerdictState());
+						return;
 						
 					}
 				}

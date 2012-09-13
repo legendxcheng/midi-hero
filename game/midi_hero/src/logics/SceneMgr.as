@@ -37,6 +37,16 @@ package logics
 		private var m_hfxI : int;
 		private var m_hfxNum : int;
 		
+		public function get hfxNum():int
+		{
+			return m_hfxNum;
+		}
+
+		public function get heroFx():Array
+		{
+			return m_heroFx;
+		}
+
 		public function setFXNum(fxn : int) : void
 		{
 			for (var i : int = 0; i < m_heroFx.length; ++i)
@@ -117,20 +127,7 @@ package logics
 			sndMgr.changeNote(m_noteInfo[m_currentNoteId].name, 20.0);
 			if (noteInfo[m_currentNoteId].hit < 1)
 				noteInfo[m_currentNoteId].hit = 1;
-				//m_noteInfo[m_currentNoteId].end - m_noteInfo[m_currentNoteId].start);
 			
-			/*
-			if (m_hfxNum > 1)
-			{
-				for (var i : int = m_hfxNum - 1; i > 0; --i)
-				{
-					var hfxl : HeroFX = m_heroFx[i];
-					var hfxf : HeroFX = m_heroFx[i - 1];
-					hfxl.changeColor(hfxf.m_color);
-				}
-			}
-			m_heroFx[0].changeColor(SceneMgr.getInstance().getCurrentNoteColor());
-			*/
 			
 		}
 		
@@ -170,7 +167,7 @@ package logics
 			m_colorList = new Array();
 			m_colorList.push(0xFFAED637);
 			m_colorList.push(0xFFFFE996);
-			m_colorList.push(0xFF2456AB);
+			m_colorList.push(0xFF47ffff);
 			m_colorList.push(0xFF3cb4e4);
 			m_colorList.push(0xFF007CDC);
 			m_colorList.push(0xFF887DDD);
@@ -459,7 +456,7 @@ package logics
 		
 		public function setNoteInfo(ni : Array) : void
 		{
-			m_timeToEnd = ni[ni.length - 1].end + 2.4;
+			m_timeToEnd = ni[ni.length - 1].end + 2.5;
 			m_noteInfo = ni;
 			// loading done --> start socre
 			startScore();
