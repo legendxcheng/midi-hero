@@ -151,6 +151,7 @@ package sprites
 		
 		override public function preUpdate() : void
 		{
+			
 			if (m_frameCnt < 30)
 			{
 				++m_frameCnt;
