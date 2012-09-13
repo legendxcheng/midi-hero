@@ -6,7 +6,10 @@ package sprites
 	import logics.GameLogic;
 	import logics.SceneMgr;
 	
+	import org.flixel.FlxG;
 	import org.flixel.FlxSprite;
+	
+	import states.VerdictState;
 	
 	
 	
@@ -110,8 +113,13 @@ package sprites
 				if (ii == sm.noteInfo.length - 1)
 				{
 					m_finalRectLeft = sm.noteSprite[si].width + sm.noteSprite[si].x;
-					if (m_finalRectLeft < 0)
+					if (Math.abs(5 - m_finalRectLeft) < 5)
+					{
 						m_finalRectLeft = 0;
+						GameLogic.getInstance().canGoToVerdictState = true;
+						FlxG.switchState(new VerdictState());
+						
+					}
 				}
 				trect.width = sm.noteSprite[si].width;
 				trect.height = sm.noteSprite[si].height;
@@ -186,6 +194,7 @@ package sprites
 			// draw FinalBlock
 			if (m_finalRectLeft != -1000)
 			{
+				trace(m_finalRectLeft);
 				trect.width = 640 - m_finalRectLeft;
 				trect.height = 80;
 				trect.x = m_finalRectLeft;
