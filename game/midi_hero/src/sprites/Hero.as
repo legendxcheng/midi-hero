@@ -97,6 +97,22 @@ package sprites
 					return;
 			}
 			
+			// check if  music is end
+			if (GameLogic.getInstance().musicEnd)
+			{
+				if (m_ySpd  > 0 || y < GameLogic.finalFlorrHeight - 4)
+				{
+					m_ySpd += m_G;
+					y += m_ySpd;
+					if (y > GameLogic.finalFlorrHeight - 4)
+					{
+						y = GameLogic.finalFlorrHeight - 4;
+						m_ySpd = 0;
+					}
+				}
+				return;
+			}
+			
 			var sm : SceneMgr = SceneMgr.getInstance();
 			if (!m_onNote)
 				m_ySpd += m_G;

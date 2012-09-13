@@ -212,7 +212,8 @@ package logics
 		
 		override public function preUpdate() : void
 		{
-			m_time.text = "Time: " + GameLogic.getInstance().getTime().toFixed(2);
+			if (!GameLogic.getInstance().musicEnd)
+				m_time.text = "Time: " + GameLogic.getInstance().getTime().toFixed(2);
 			//m_fps.text = (1 / FlxG.elapsed).toString();
 			
 			var tmp : Number = Evaluator.getInstance().score;

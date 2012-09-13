@@ -18,11 +18,12 @@ package sprites
 		private var m_rectFxColor;
 		private var m_rectFxFrame : int;
 		private var m_alphaList : Array;
-
+		private var m_finalRectLeft : int;
 		
 		public function Notes(X:Number=0, Y:Number=0, SimpleGraphic:Class=null)
 		{
 			super(X, Y, SimpleGraphic);
+			m_finalRectLeft = -1000;
 			frameHeight =height = GameLogic.screenHeight;
 			frameWidth = width = GameLogic.screenWidth;
 			frames = 1;
@@ -105,8 +106,13 @@ package sprites
 					flag = true;
 				else flag = false;
 				
-				
-				
+				// final note appears
+				if (ii == sm.noteInfo.length - 1)
+				{
+					m_finalRectLeft = sm.noteSprite[si].width + sm.noteSprite[si].x;
+					if (m_finalRectLeft < 0)
+						m_finalRectLeft = 0;
+				}
 				trect.width = sm.noteSprite[si].width;
 				trect.height = sm.noteSprite[si].height;
 				trect.x = sm.noteSprite[si].x;
@@ -164,6 +170,7 @@ package sprites
 					}
 				}
 				
+				
 
 				
 				// loop end
@@ -174,6 +181,16 @@ package sprites
 				
 				if (flag)
 					break;
+			}
+			
+			// draw FinalBlock
+			if (m_finalRectLeft != -1000)
+			{
+				trect.width = 640 - m_finalRectLeft;
+				trect.height = 80;
+				trect.x = m_finalRectLeft;
+				trect.y = GameLogic.finalFlorrHeight;
+				_pixels.fillRect(trect, 0xAAFFFFFF);
 			}
 			
 			_pixels.unlock();

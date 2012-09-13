@@ -92,14 +92,19 @@ package logics
 		{
 			if (m_currentNoteId + 1 <m_noteInfo.length)
 				return m_noteInfo[m_currentNoteId + 1].high - m_noteInfo[m_currentNoteId].high;
-			return 0;
+			return 10;
 		}
 		
 		public function getWidthOffset() : Number
 		{
+			var ret : int;
 			if (m_currentNoteId + 1 <m_noteInfo.length)
-				return m_noteInfo[m_currentNoteId + 1].start - m_noteInfo[m_currentNoteId].end;
-			return 0;
+			{
+				ret =  m_noteInfo[m_currentNoteId + 1].start - m_noteInfo[m_currentNoteId].end;
+				if (ret > 0)
+					return ret;
+			}
+			return 10;
 		}
 		
 		public function heroHitNote() : void
@@ -300,7 +305,9 @@ package logics
 			if (m_timeToEnd < GameLogic.getInstance().getTime())
 			{
 				// change to evaluation state
-				FlxG.switchState(new VerdictState());
+				//FlxG.switchState(new VerdictState());
+				GameLogic.getInstance().musicEnd = true;
+				SoundMgr.getInstance().stopSound();
 			}
 			
 			if (!m_isPlaying)
@@ -452,8 +459,9 @@ package logics
 		
 		public function setNoteInfo(ni : Array) : void
 		{
-			m_timeToEnd = ni[ni.length - 1].end + 3;
+			m_timeToEnd = ni[ni.length - 1].end + 2.4;
 			m_noteInfo = ni;
+			// loading done --> start socre
 			startScore();
 		}
 		
