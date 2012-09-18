@@ -28,7 +28,7 @@ package states
 			add(m_gameLogic);
 			
 			var mp : MidiParser = MidiParser.getInstance();
-			mp.loadJson("http://xcheng-xchengdom.stor.sinaapp.com/midiHero/zelda_orchestra_t.jsn");		
+			mp.loadJson(GameLogic.getInstance().midiAddr);		
 			
 			m_uiMgr = UIMgr.getInstance();
 			add(m_uiMgr);

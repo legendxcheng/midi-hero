@@ -38,7 +38,8 @@ package sprites
 			m_difficulty.size = 14;
 			add(m_difficulty);
 			
-			
+			m_name.color = 0xFFAAAAAA;
+			m_difficulty.color = 0xFFAAAAAA;
 		}
 		
 		public function setFocus(flag :Boolean):void
@@ -53,8 +54,8 @@ package sprites
 			else
 			{
 				m_bg.alpha = 0.15;
-				m_name.color = 0xFFFFFFFF;
-				m_difficulty.color = 0xFFFFFFFF;
+				m_name.color = 0xFFAAAAAA;
+				m_difficulty.color = 0xFFAAAAAA;
 			}
 			m_bgShowing = true;
 		}
