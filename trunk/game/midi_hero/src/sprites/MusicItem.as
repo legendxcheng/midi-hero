@@ -67,7 +67,7 @@ package sprites
 				if (m_bgShowing)
 				{
 					m_bg.alpha += 0.004;
-					trace(m_bg.alpha);
+
 					if (m_bg.alpha >= 0.8)
 						m_bgShowing = false;
 				}
