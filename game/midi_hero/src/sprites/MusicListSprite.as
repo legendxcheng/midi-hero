@@ -89,6 +89,7 @@ package sprites
 					
 					if (FlxG.keys.justPressed("J"))
 					{
+						trace(GameLogic.getInstance().musicList[m_focusID].addr);
 						GameLogic.getInstance().midiAddr = GameLogic.getInstance().musicList[m_focusID].addr;
 						FlxG.switchState(new PlayState());
 					}
