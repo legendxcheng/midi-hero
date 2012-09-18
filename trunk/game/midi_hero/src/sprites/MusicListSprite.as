@@ -1,26 +1,55 @@
 package sprites
 {
 	import logics.GameLogic;
-	
+	import states.PlayState;	
 	import org.flixel.FlxG;
 	import org.flixel.FlxGroup;
+	import org.flixel.FlxText;
+
 	
 	public class MusicListSprite extends FlxGroup
 	{
 		private var m_musicList : Array;
 		private var m_focusID : int;
 		private var m_inited :Boolean;
+		private var m_titleTxt :FlxText;
+		private var m_pressTxt:FlxText;
+		private var m_ptShowing :Boolean;
 		public function MusicListSprite(MaxSize:uint=0)
 		{
 			super(MaxSize);
+			
+			m_ptShowing = true;
+			
+			m_pressTxt = new FlxText(140, 430, 800, "Press J to Start");
+			m_pressTxt.size = 40;
+			m_pressTxt.alignment = "left";
+			add(m_pressTxt);
+			
 			m_focusID = 0;
 			m_inited = false;
 			// wait for load json
-			
+			m_titleTxt = new FlxText(20, 10, 640, "Select a midi to play");
+			m_titleTxt.size = 40;
+			add(m_titleTxt);
 		}
 		
 		override public function preUpdate():void
 		{
+			if (!m_ptShowing)
+			{
+				m_pressTxt.alpha -= 0.01;
+				if (m_pressTxt.alpha == 0)
+					m_ptShowing = true;
+			}
+			else
+			{
+				m_pressTxt.alpha += 0.05;
+				if (m_pressTxt.alpha == 1)
+					m_ptShowing = false;
+			}
+			
+			
 			if (!m_inited)
 			{
 				var gl :GameLogic = GameLogic.getInstance();
@@ -49,6 +78,7 @@ package sprites
 					add(tmp);
 					
 				}
+				m_musicList[0].setFocus(true);
 			}
 			else
 			{
@@ -56,6 +86,12 @@ package sprites
 				if (FlxG.keys.any())
 				{
 					m_musicList[m_focusID].setFocus(false);
+					
+					if (FlxG.keys.justPressed("J"))
+					{
+						GameLogic.getInstance().midiAddr = GameLogic.getInstance().musicList[m_focusID].addr;
+						FlxG.switchState(new PlayState());
+					}
 					
 					if (FlxG.keys.justPressed("LEFT"))
 					{

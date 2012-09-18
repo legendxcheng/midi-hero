@@ -16,6 +16,7 @@ package logics
 		private var m_musicEnd :Boolean;
 		private var m_canGoToVerdictState : Boolean;
 		private var m_musicList : Array;
+		private var m_midiAddr :String;
 		
 		public function GameLogic()
 		{
@@ -27,6 +28,16 @@ package logics
 			m_musicList = null;
 		}
 				
+		public function get midiAddr():String
+		{
+			return m_midiAddr;
+		}
+
+		public function set midiAddr(value:String):void
+		{
+			m_midiAddr = value;
+		}
+
 		public function set musicList(value:Array):void
 		{
 			m_musicList = value;
