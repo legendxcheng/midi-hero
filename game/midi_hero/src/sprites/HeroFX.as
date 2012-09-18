@@ -14,14 +14,14 @@ package sprites
 	public class HeroFX extends FlxSprite
 	{
 		public var m_color : int;	
-		public function HeroFX(X:Number=0, Y:Number=0, SimpleGraphic:Class=null)
+		public function HeroFX(size : Number = 4, X:Number=0, Y:Number=0, SimpleGraphic:Class=null)
 		{
 			super(X, Y, SimpleGraphic);
-			frameHeight =height = 4;
-			frameWidth = width = 4;
+			frameHeight =height = size;
+			frameWidth = width = size;
 			frames = 1;
 			frame = 0;
-			_pixels = new BitmapData(4, 4, true, 0xFFFFFFFF);
+			_pixels = new BitmapData(size, size, true, 0xFFFFFFFF);
 			resetHelpers();
 		}
 		
