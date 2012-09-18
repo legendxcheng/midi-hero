@@ -13,24 +13,50 @@ package sprites
 		private var m_difficulty :FlxText;
 		private var m_bg : MItemBg;
 		private var m_bgShowing :Boolean;
-		public function MusicItem(name : String, diff : int, MaxSize:uint=0)
+		private var m_bx :int;
+		private var m_by :int;
+		public function MusicItem(tx:int, ty:int, name : String, diff : int, MaxSize:uint=0)
 		{
 			super(MaxSize);
-			m_bg = new MItemBg;
+			
+			m_bx = tx;
+			m_by = ty;
+			
+			
+			m_bg = new MItemBg(m_bx, m_by);
+			add(m_bg);
+			m_bg.alpha = 0.1;
 			m_focus = false;
 			
-			m_name = new FlxText(10, 20, 200, name);
-			m_name.size = 20;
+			
+			
+			m_name = new FlxText(m_bx + 5, m_by + 5, 250, name);
+			m_name.size = 16;
 			add(m_name);
 			
-			m_difficulty = new FlxText(100, 30, 200, "Difficulty: " + diff.toString());
-			m_difficulty.size = 20;
+			m_difficulty = new FlxText(m_bx + 180, m_by + 25, 200, "Difficulty: " + diff.toString());
+			m_difficulty.size = 14;
 			add(m_difficulty);
+			
+			
 		}
 		
 		public function setFocus(flag :Boolean):void
 		{
 			m_focus = flag;
+			if (m_focus)
+			{
+				m_bg.alpha = 0.75;
+				m_name.color = 0xFF444444;
+				m_difficulty.color = 0xFF444444;
+			}
+			else
+			{
+				m_bg.alpha = 0.15;
+				m_name.color = 0xFFFFFFFF;
+				m_difficulty.color = 0xFFFFFFFF;
+			}
+			m_bgShowing = true;
 		}
 		
 		override public function preUpdate() : void
@@ -39,14 +65,15 @@ package sprites
 			{
 				if (m_bgShowing)
 				{
-					m_bg.alpha += 0.01;
-					if (m_bg.alpha >= 0.9)
+					m_bg.alpha += 0.004;
+					trace(m_bg.alpha);
+					if (m_bg.alpha >= 0.8)
 						m_bgShowing = false;
 				}
 				else
 				{
-					m_bg.alpha -= 0.01;
-					if (m_bg.alpha <= 0.7)
+					m_bg.alpha -= 0.004;
+					if (m_bg.alpha <= 0.6)
 						m_bgShowing = true;
 				}
 			}
@@ -54,14 +81,14 @@ package sprites
 			{
 				if (m_bgShowing)
 				{
-					m_bg.alpha += 0.01;
-					if (m_bg.alpha >= 0.6)
+					m_bg.alpha += 0.0005;
+					if (m_bg.alpha >= 0.15)
 						m_bgShowing = false;
 				}
 				else
 				{
-					m_bg.alpha -= 0.01;
-					if (m_bg.alpha <= 0.4)
+					m_bg.alpha -= 0.0005;
+					if (m_bg.alpha <= 0.1)
 						m_bgShowing = true;
 				}
 			}

@@ -151,7 +151,8 @@ package logics
 				var tname : String = m_json[i].name;
 				var taddr : String = m_json[i].addr;
 				
-				ni.push({id: m_json[i].id , name : m_json[i].name, addr : m_json[i].addr});
+				ni.push({id: m_json[i].id , name : m_json[i].name, addr : m_json[i].addr,
+				difficulty: m_json[i].difficulty});
 				/* hit  0 not need play
 				1 played
 				2 missed
