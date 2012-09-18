@@ -17,10 +17,7 @@ package logics
 			
 		public function MidiParser()
 		{
-			m_urlLoader = new URLLoader();
-			m_urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
-			m_urlLoader.addEventListener(Event.COMPLETE, parseJson);
-			m_urlLoader.addEventListener(IOErrorEvent.IO_ERROR, handleError);
+			
 		}
 		
 		static private var m_instance : MidiParser = null;
@@ -32,8 +29,21 @@ package logics
 			return m_instance;
 		}
 		
+		public function loadMusicList() : void
+		{
+			m_urlLoader = new URLLoader();
+			m_urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
+			m_urlLoader.addEventListener(Event.COMPLETE, parseMusicList);
+			m_urlLoader.addEventListener(IOErrorEvent.IO_ERROR, handleError);
+			m_urlLoader.load(new URLRequest("http://xcheng.sinaapp.com/media/midihero/musicList.json"));
+		}
+		
 		public function loadJson(jsonUrl : String) : void
 		{
+			m_urlLoader = new URLLoader();
+			m_urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
+			m_urlLoader.addEventListener(Event.COMPLETE, parseMusicList);
+			m_urlLoader.addEventListener(IOErrorEvent.IO_ERROR, handleError);
 			m_urlLoader.load(new URLRequest(jsonUrl));
 		}
 		
@@ -122,8 +132,35 @@ package logics
 			}
 			
 			sm.setNoteInfo(ni);
+			m_urlLoader.removeEventListener(Event.COMPLETE, parseJson);
 			
+		}
+		
+		private function parseMusicList(event : Event) : void
+		{
+			var gl :GameLogic = GameLogic.getInstance();
+			var rawData:String = String(m_urlLoader.data);
+			m_json = (com.adobe.serialization.json.JSON.decode(rawData) as Array);
+			// now we have the score data
+			// we parse it to a more convenient format
+			// then pass it to SceneMgr
+			var ni : Array = new Array();
+			for (var i : int = 0; i < m_json.length; ++i)
+			{
+				var tid : int = m_json[i].id;
+				var tname : String = m_json[i].name;
+				var taddr : String = m_json[i].addr;
+				
+				ni.push({id: m_json[i].id , name : m_json[i].name, addr : m_json[i].addr});
+				/* hit  0 not need play
+				1 played
+				2 missed
+				*/
+			}
 			
+			gl.musicList = ni;
+			
+			m_urlLoader.removeEventListener(Event.COMPLETE, parseMusicList);
 		}
 		
 		private function handleError(event : IOErrorEvent) : void
