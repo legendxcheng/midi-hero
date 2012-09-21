@@ -39,7 +39,7 @@ package logics
 			m_urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
 			m_urlLoader.addEventListener(Event.COMPLETE, parseMusicList);
 			m_urlLoader.addEventListener(IOErrorEvent.IO_ERROR, handleError);
-			m_urlLoader.load(new URLRequest("http://xcheng.sinaapp.com/media/midihero/musicList.json" 
+			m_urlLoader.load(new URLRequest("http://xcheng.sinaapp.com/media/midihero/musicList.json?time=123456" 
 				+"?time=123456"));
 		}
 		

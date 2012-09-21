@@ -18,7 +18,7 @@ package sprites
 		private var m_curHitNode : int;
 		private var m_curHitNodeSi : int;
 		private var m_rectFxPct : Number;
-		private var m_rectFxColor;
+		private var m_rectFxColor :Number;
 		private var m_rectFxFrame : int;
 		private var m_alphaList : Array;
 		private var m_finalRectLeft : int;

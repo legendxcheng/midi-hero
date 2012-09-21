@@ -132,7 +132,7 @@ package sprites{
 			return _textField.text;
 		}	
 		
-		public function release()
+		public function release() :void
 		{
 			FlxG.stage.removeChild(_textField);
 		}

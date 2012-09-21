@@ -2,7 +2,9 @@ package sprites
 {
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxText;
-	
+	import org.flixel.FlxG;
+	import states.MusicListState;
+	import logics.SceneMgr;
 	public class PlaySprite extends FlxGroup
 	{
 		private var m_pressTxt:FlxText;
@@ -13,8 +15,8 @@ package sprites
 			super(MaxSize);
 			m_ptShowing = true;
 			
-			m_pressTxt = new FlxText(140, 430, 800, "Press J to Jump");
-			m_pressTxt.size = 40;
+			m_pressTxt = new FlxText(70, 430, 800, "Press J to Jump   Press R to Return");
+			m_pressTxt.size = 20;
 			m_pressTxt.alignment = "left";
 			add(m_pressTxt);
 			
@@ -34,6 +36,13 @@ package sprites
 				m_pressTxt.alpha += 0.05;
 				if (m_pressTxt.alpha == 1)
 					m_ptShowing = false;
+			}
+			
+			if (FlxG.keys.justPressed("R"))
+			{
+				SceneMgr.getInstance().stopSound();
+				FlxG.switchState(new MusicListState());			
+				
 			}
 		}
 	}
