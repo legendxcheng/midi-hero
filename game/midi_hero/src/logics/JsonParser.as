@@ -8,7 +8,10 @@ package logics
 	
 	import logics.SceneMgr;
 	
+	import org.flixel.FlxG;
 	import org.flixel.FlxTimer;
+	
+	import states.RankState;
 
 	public class JsonParser
 	{
@@ -38,6 +41,16 @@ package logics
 			m_urlLoader.addEventListener(IOErrorEvent.IO_ERROR, handleError);
 			m_urlLoader.load(new URLRequest("http://xcheng.sinaapp.com/media/midihero/musicList.json" 
 				+"?time=123456"));
+		}
+		
+		public function loadRankList(midiid: int) : void
+		{
+			
+			m_urlLoader = new URLLoader();
+			m_urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
+			m_urlLoader.addEventListener(Event.COMPLETE, parseRankList);
+			m_urlLoader.addEventListener(IOErrorEvent.IO_ERROR, handleError);
+			m_urlLoader.load(new URLRequest("http://xcheng.sinaapp.com/midihero/ranklist/" + midiid.toString() + "/"));
 		}
 		
 		public function loadJson(jsonUrl : String) : void
@@ -164,6 +177,28 @@ package logics
 			gl.musicList = ni;
 			
 			m_urlLoader.removeEventListener(Event.COMPLETE, parseMusicList);
+		}
+		
+		private function parseRankList(event : Event) : void
+		{
+			var gl :GameLogic = GameLogic.getInstance();
+			var rawData:String = String(m_urlLoader.data);
+			m_json = (com.adobe.serialization.json.JSON.decode(rawData) as Array);
+			// now we have the score data
+			// we parse it to a more convenient format
+			// then pass it to SceneMgr
+			var ni : Array = new Array();
+			for (var i : int = 0; i < m_json.length; ++i)
+			{
+				ni.push({midi: m_json[i].midi , player : m_json[i].player, score : m_json[i].score});
+			}
+			
+			gl.rankList = ni;
+			
+			m_urlLoader.removeEventListener(Event.COMPLETE, parseMusicList);
+			
+			FlxG.switchState(new RankState());
+			
 		}
 		
 		private function handleError(event : IOErrorEvent) : void

@@ -1,13 +1,11 @@
 package logics
 {
 	import flash.events.Event;
-	
+	import flash.net.*;
 	
 	import org.flixel.FlxBasic;
 	import org.flixel.FlxG;
 	import org.flixel.FlxTimer;
-	
-	import flash.net.*;
 	
 	public class GameLogic extends FlxBasic
 	{
@@ -21,10 +19,31 @@ package logics
 		private var m_musicEnd :Boolean;
 		private var m_canGoToVerdictState : Boolean;
 		private var m_musicList : Array;
+		private var m_rankList :Array;
 		private var m_midiAddr :String;
 		private var m_midiID : int;
 		private var m_userName : String;
 		
+		public function get midiID():int
+		{
+			return m_midiID;
+		}
+
+		public function set midiID(value:int):void
+		{
+			m_midiID = value;
+		}
+
+		public function get rankList():Array
+		{
+			return m_rankList;
+		}
+
+		public function set rankList(value:Array):void
+		{
+			m_rankList = value;
+		}
+
 		public function submitUserScore(user : String)
 		{
 			//http ..
@@ -41,6 +60,7 @@ package logics
 				
 			sendToURL(request);
 		}
+		
 		
 		
 		
@@ -69,6 +89,7 @@ package logics
 			m_musicEnd = false;
 			m_canGoToVerdictState = false;
 			m_musicList = null;
+			m_rankList = null;
 		}
 				
 		public function get midiAddr():String
