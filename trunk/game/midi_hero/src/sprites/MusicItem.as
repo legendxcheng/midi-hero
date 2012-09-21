@@ -7,7 +7,7 @@ package sprites
 	public class MusicItem extends FlxGroup
 	{
 		private var m_focus : Boolean;
-		private var m_id;
+		private var m_id : int;
 		
 		private var m_name :FlxText;
 		private var m_difficulty :FlxText;

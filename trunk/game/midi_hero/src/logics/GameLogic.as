@@ -44,7 +44,7 @@ package logics
 			m_rankList = value;
 		}
 
-		public function submitUserScore(user : String)
+		public function submitUserScore(user : String) :void
 		{
 			//http ..
 			m_userName = user;
@@ -64,12 +64,12 @@ package logics
 		
 		
 		
-		public function setMIdiID(k : int)
+		public function setMIdiID(k : int) :void
 		{
 			m_midiID = m_musicList[k].id;
 		}
 		
-		public function reset()
+		public function reset() :void
 		{
 			m_timeElapsed = 0;
 			m_musicEnd = false;

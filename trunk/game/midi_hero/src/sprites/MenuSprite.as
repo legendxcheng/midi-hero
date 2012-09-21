@@ -182,7 +182,7 @@ package sprites
 			for (i = 1; i < 10; ++i)
 			{
 				var tmp2 : HeroFX = m_heros[i];
-				var kk = m_heroYk - i * (i + 1) / 2;
+				var kk : int = m_heroYk - i * (i + 1) / 2;
 				if (kk < 0) 
 					kk += 120;
 				tmp2.x = m_heros[0].x - i * (i+1) * 1.5;

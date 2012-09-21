@@ -52,7 +52,7 @@ package logics
 			m_urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
 			m_urlLoader.addEventListener(Event.COMPLETE, parseJson);
 			m_urlLoader.addEventListener(IOErrorEvent.IO_ERROR, handleError);
-			m_urlLoader.load(new URLRequest("http://xcheng-xchengdom.stor.sinaapp.com/midiHero/note_freq.json"));
+			m_urlLoader.load(new URLRequest("http://xcheng.sinaapp.com/media/midihero/note_freq.json?time=123456"));
 		}
 		
 		private function handleError(event : IOErrorEvent) : void
