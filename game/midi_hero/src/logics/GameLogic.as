@@ -32,7 +32,7 @@ package logics
 			
 			//var request:URLRequest = new URLRequest("http://127.0.0.1:8000/midihero/submit/");
 			
-			var request:URLRequest = new URLRequest("xcheng.sinaapp.com/midihero/submit/");
+			var request:URLRequest = new URLRequest("http://xcheng.sinaapp.com/midihero/submit/");
 			var vari : URLVariables = new URLVariables();
 			vari.user = m_userName;
 			vari.score = Evaluator.getInstance().score;
