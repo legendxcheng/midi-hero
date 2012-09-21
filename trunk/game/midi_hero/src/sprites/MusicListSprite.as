@@ -6,6 +6,7 @@ package sprites
 	import org.flixel.FlxG;
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxText;
+	import logics.JsonParser;
 
 	
 	public class MusicListSprite extends FlxGroup
@@ -22,8 +23,8 @@ package sprites
 			
 			m_ptShowing = true;
 			
-			m_pressTxt = new FlxText(140, 430, 800, "Press J to Start");
-			m_pressTxt.size = 40;
+			m_pressTxt = new FlxText(70, 430, 800, "Press J to Start   Press R to see ranklist");
+			m_pressTxt.size = 20;
 			m_pressTxt.alignment = "left";
 			add(m_pressTxt);
 			
@@ -96,6 +97,15 @@ package sprites
 						GameLogic.getInstance().reset();
 						FlxG.switchState(new PlayState());
 						//FlxG.switchState(new MusicListState());
+					}
+					
+					if (FlxG.keys.justPressed("R"))
+					{
+						GameLogic.getInstance().midiAddr = GameLogic.getInstance().musicList[m_focusID].addr;
+						GameLogic.getInstance().setMIdiID(m_focusID);
+						GameLogic.getInstance().reset();
+						JsonParser.getInstance().loadRankList(m_focusID);
+						
 					}
 					
 					if (FlxG.keys.justPressed("LEFT"))
