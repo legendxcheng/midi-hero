@@ -50,7 +50,7 @@ package logics
 			m_urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
 			m_urlLoader.addEventListener(Event.COMPLETE, parseRankList);
 			m_urlLoader.addEventListener(IOErrorEvent.IO_ERROR, handleError);
-			m_urlLoader.load(new URLRequest("http://xcheng.sinaapp.com/midihero/ranklist/" + midiid.toString() + "/"));
+			m_urlLoader.load(new URLRequest("http://xcheng.sinaapp.com/midihero/ranklist/" + midiid.toString() + "/?time=123456"));
 		}
 		
 		public function loadJson(jsonUrl : String) : void
