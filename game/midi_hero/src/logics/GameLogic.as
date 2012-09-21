@@ -1,8 +1,13 @@
 package logics
 {
+	import flash.events.Event;
+	
+	
 	import org.flixel.FlxBasic;
 	import org.flixel.FlxG;
 	import org.flixel.FlxTimer;
+	
+	import flash.net.*;
 	
 	public class GameLogic extends FlxBasic
 	{
@@ -17,6 +22,44 @@ package logics
 		private var m_canGoToVerdictState : Boolean;
 		private var m_musicList : Array;
 		private var m_midiAddr :String;
+		private var m_midiID : int;
+		private var m_userName : String;
+		
+		public function submitUserScore(user : String)
+		{
+			//http ..
+			m_userName = user;
+			
+			var request:URLRequest = new URLRequest("http://127.0.0.1:8000/midihero/submit/");
+			
+			//var request:URLRequest = new URLRequest("xcheng.sinaapp.com/midihero/submit/");
+			var vari : URLVariables = new URLVariables();
+			vari.user = m_userName;
+			vari.score = Evaluator.getInstance().score;
+			vari.midi = m_midiID;
+			request.data = vari;
+				
+			sendToURL(request);
+		}
+		
+		
+		
+		public function setMIdiID(k : int)
+		{
+			m_midiID = m_musicList[k].id;
+		}
+		
+		public function reset()
+		{
+			m_timeElapsed = 0;
+			m_musicEnd = false;
+			m_canGoToVerdictState = false;
+			SceneMgr.reset();
+			UIMgr.reset();
+			SoundMgr.reset();
+			Evaluator.reset();
+			
+		}
 		
 		public function GameLogic()
 		{

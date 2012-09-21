@@ -1,13 +1,21 @@
 package sprites
 {
+	import flash.events.EventDispatcher;
+	import flash.events.KeyboardEvent;
+	
+	import logics.Evaluator;
+	import logics.GameLogic;
+	import logics.SceneMgr;
+	
+	import org.flixel.FlxG;
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxText;
 	
 	import sprites.FinalBlock;
+	import sprites.FlxInputText;
 	import sprites.HeroFX;
-	import logics.Evaluator;
-	import logics.GameLogic;
-	import logics.SceneMgr;
+	
+	import states.MusicListState;
 	
 	public class VerdictGroup extends FlxGroup
 	{
@@ -24,6 +32,11 @@ package sprites
 		private var m_rankTxt : FlxText;
 		private var m_rankTxt2 : FlxText;
 		private var m_frameCnt : int;
+		
+		// name input field
+		private var m_eynTxt : FlxText;
+		private var m_nameTxt : FlxInputText;
+		
 		
 		public function VerdictGroup(MaxSize:uint=0)
 		{
@@ -147,6 +160,30 @@ package sprites
 			add(m_rankTxt);
 			add(m_rankTxt2);
 			m_rankTxt2.alpha = 0;
+			
+			
+			m_eynTxt = new FlxText(50, 380, 300, "Enter your name: ");
+			add(m_eynTxt);
+			m_eynTxt.size = 20;
+			m_eynTxt.color = 0xFF000000;
+			m_eynTxt.visible = false;
+			
+			m_nameTxt = new FlxInputText(300, 380, 300, 50, "");
+			
+			m_nameTxt.size = 20;
+			m_nameTxt.backgroundVisible = false;
+			m_nameTxt.borderVisible = true;
+			m_nameTxt.borderColor = 0xFFFFFFFF;
+			m_nameTxt.visible = false;
+			add(m_nameTxt);
+		}
+		
+		private function keyDownHandler(event:KeyboardEvent):void {
+			trace("keyDownHandler: " + event.keyCode);
+			trace("ctrlKey: " + event.ctrlKey);
+			trace("keyLocation: " + event.keyLocation);
+			trace("shiftKey: " + event.shiftKey);
+			trace("altKey: " + event.altKey);
 		}
 		
 		override public function preUpdate() : void
@@ -166,6 +203,21 @@ package sprites
 				++m_frameCnt;
 				m_rankTxt2.alpha = (m_frameCnt - 30) * (m_frameCnt - 30) / 100;
 				
+			}
+			if (m_frameCnt == 39)
+			{
+				m_eynTxt.visible = true;		
+				m_nameTxt.visible = true;
+			}
+			if (m_frameCnt >= 40)
+			{
+				
+				if (FlxG.keys.justPressed("ENTER"))
+				{
+					GameLogic.getInstance().submitUserScore(m_nameTxt.getText());
+					m_nameTxt.release();
+					FlxG.switchState(new MusicListState());
+				}
 			}
 		}
 	}

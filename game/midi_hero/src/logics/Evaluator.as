@@ -12,6 +12,11 @@ package logics
 			m_maxStreak = 0;
 		}
 		
+		static public function reset() : void
+		{
+			m_instance = null;	
+		}
+		
 		private static var m_instance : Evaluator = null;
 		private var m_score : int; // total percentage * 100
 		private var m_noteEval : Array;

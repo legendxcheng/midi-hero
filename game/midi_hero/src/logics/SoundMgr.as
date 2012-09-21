@@ -38,6 +38,11 @@ package logics
 		private var m_urlLoader : URLLoader;
 		private var m_soundTransform : SoundTransform;
 		
+		public static function reset():void
+		{
+			m_instance = null;
+		}
+		
 		/*
 			load note_freq json file, and input the data into a map
 		*/

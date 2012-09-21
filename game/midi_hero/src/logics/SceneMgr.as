@@ -196,8 +196,10 @@ package logics
 				tmp.visible = false;
 				m_heroFx.push(tmp);
 			}
+			
 			m_hfxI = 0;
 			m_hfxNum = 0;
+
 			
 		}
 		
@@ -206,6 +208,10 @@ package logics
 			move the note sprites leftward
 		*/
 		
+		static public function reset() :void
+		{
+			m_instance = null;
+		}
 		
 		public function get soundPlayX():int
 		{

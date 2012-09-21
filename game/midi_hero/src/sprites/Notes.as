@@ -195,7 +195,7 @@ package sprites
 			// draw FinalBlock
 			if (m_finalRectLeft != -1000)
 			{
-				trace(m_finalRectLeft);
+				//trace(m_finalRectLeft);
 				trect.width = 640 - m_finalRectLeft;
 				trect.height = 80;
 				trect.x = m_finalRectLeft;

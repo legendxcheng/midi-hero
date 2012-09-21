@@ -31,18 +31,20 @@ package logics
 		
 		public function loadMusicList() : void
 		{
+		
 			m_urlLoader = new URLLoader();
 			m_urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
 			m_urlLoader.addEventListener(Event.COMPLETE, parseMusicList);
 			m_urlLoader.addEventListener(IOErrorEvent.IO_ERROR, handleError);
-			m_urlLoader.load(new URLRequest("http://xcheng.sinaapp.com/media/midihero/musicList.json"));
+			m_urlLoader.load(new URLRequest("http://xcheng.sinaapp.com/media/midihero/musicList.json" 
+				+"?time=123456"));
 		}
 		
 		public function loadJson(jsonUrl : String) : void
 		{
 			m_urlLoader = new URLLoader();
 			m_urlLoader.dataFormat = URLLoaderDataFormat.TEXT;
-			m_urlLoader.addEventListener(Event.COMPLETE, parseMusicList);
+			m_urlLoader.addEventListener(Event.COMPLETE, parseJson);
 			m_urlLoader.addEventListener(IOErrorEvent.IO_ERROR, handleError);
 			m_urlLoader.load(new URLRequest(jsonUrl));
 		}
