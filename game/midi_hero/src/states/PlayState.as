@@ -2,7 +2,7 @@
 package states
 {
 	import logics.GameLogic;
-	import logics.MidiParser;
+	import logics.JsonParser;
 	import logics.Note;
 	import logics.SceneMgr;
 	import logics.SoundMgr;
@@ -29,7 +29,7 @@ package states
 			m_gameLogic = GameLogic.getInstance();
 			add(m_gameLogic);
 			
-			var mp : MidiParser = MidiParser.getInstance();
+			var mp : JsonParser = JsonParser.getInstance();
 			mp.loadJson(GameLogic.getInstance().midiAddr);		
 			
 			m_uiMgr = UIMgr.getInstance();
