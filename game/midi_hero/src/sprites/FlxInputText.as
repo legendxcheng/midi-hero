@@ -50,6 +50,8 @@ package sprites{
 			_textField.addEventListener(Event.REMOVED_FROM_STAGE, onInputFieldRemoved);
 			_textField.addEventListener(Event.CHANGE,		onTextChange);
 			FlxG.stage.addChild(_textField);
+			
+			
 		}
 		
 		//@desc		Boolean flag in case render() is called BEFORE onEnterFrame() (_textField would be always hidden)
