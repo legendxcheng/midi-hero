@@ -172,8 +172,6 @@ package sprites
 			
 			m_nameTxt.size = 20;
 			m_nameTxt.backgroundVisible = false;
-			m_nameTxt.borderVisible = true;
-			m_nameTxt.borderColor = 0xFFFFFFFF;
 			m_nameTxt.visible = false;
 			add(m_nameTxt);
 		}
@@ -208,6 +206,8 @@ package sprites
 			{
 				m_eynTxt.visible = true;		
 				m_nameTxt.visible = true;
+				m_nameTxt.setFocus();
+				
 			}
 			if (m_frameCnt >= 40)
 			{

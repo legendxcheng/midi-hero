@@ -11,6 +11,7 @@ package states
 	import org.flixel.*;
 	
 	import sprites.Hero;
+	import sprites.PlaySprite;
 
 	public class PlayState extends FlxState
 	{
@@ -18,6 +19,7 @@ package states
 		private var m_uiMgr : UIMgr;
 		private var m_gameLogic : GameLogic;
 		private var m_hero : Hero;
+		private var m_sprite :PlaySprite;
 		
 		override public function create():void
 		{
@@ -40,6 +42,8 @@ package states
 			
 			m_soundMgr = SoundMgr.getInstance();
 			m_soundMgr.loadNoteFreq();
+			m_sprite = new PlaySprite();
+			add(m_sprite);
 		}
 		
 	}
