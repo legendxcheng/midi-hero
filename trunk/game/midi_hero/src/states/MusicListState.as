@@ -1,7 +1,7 @@
 package states
 {
 	import logics.GameLogic;
-	import logics.MidiParser;
+	import logics.JsonParser;
 	
 	import org.flixel.FlxState;
 	
@@ -13,7 +13,7 @@ package states
 		public function MusicListState()
 		{
 			super();
-			MidiParser.getInstance().loadMusicList();
+			JsonParser.getInstance().loadMusicList();
 			m_sprite = new MusicListSprite();
 			add(m_sprite);
 		}

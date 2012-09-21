@@ -1,6 +1,6 @@
 package
 {
-	import logics.MidiParser;
+	import logics.JsonParser;
 	
 	import org.flixel.*;
 	

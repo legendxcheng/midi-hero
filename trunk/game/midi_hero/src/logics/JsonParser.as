@@ -10,22 +10,22 @@ package logics
 	
 	import org.flixel.FlxTimer;
 
-	public class MidiParser
+	public class JsonParser
 	{
 		private var m_json : Array;
 		private var m_urlLoader : URLLoader;
 			
-		public function MidiParser()
+		public function JsonParser()
 		{
 			
 		}
 		
-		static private var m_instance : MidiParser = null;
+		static private var m_instance : JsonParser = null;
 		
-		static public function getInstance() : MidiParser
+		static public function getInstance() : JsonParser
 		{
 			if (m_instance == null)
-				m_instance = new MidiParser();
+				m_instance = new JsonParser();
 			return m_instance;
 		}
 		
