@@ -2,6 +2,7 @@ package sprites
 {
 	import logics.GameLogic;
 	import states.PlayState;	
+	import states.MusicListState;
 	import org.flixel.FlxG;
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxText;
@@ -91,7 +92,10 @@ package sprites
 					{
 						trace(GameLogic.getInstance().musicList[m_focusID].addr);
 						GameLogic.getInstance().midiAddr = GameLogic.getInstance().musicList[m_focusID].addr;
+						GameLogic.getInstance().setMIdiID(m_focusID);
+						GameLogic.getInstance().reset();
 						FlxG.switchState(new PlayState());
+						//FlxG.switchState(new MusicListState());
 					}
 					
 					if (FlxG.keys.justPressed("LEFT"))

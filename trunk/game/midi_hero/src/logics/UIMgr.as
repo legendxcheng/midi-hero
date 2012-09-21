@@ -45,6 +45,10 @@ package logics
 		private var m_noteHitState : NoteHitState;
 		
 		private static var m_instance : UIMgr = null;
+		public static function reset():void
+		{
+			m_instance = null;
+		}
 		
 		public function resetHitMiss(isHit : Boolean, hit : int, tot : int) : void
 		{
